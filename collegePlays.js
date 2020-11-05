@@ -121,7 +121,7 @@ http://site.api.espn.com/apis/site/v2/sports/football/college-football/teams/vt/
 // }
 // displayGames()
 
-const gameURL = `http://site.api.espn.com/apis/site/v2/sports/football/college-football/summary?event=401237125`
+const gameURL = `https://site.api.espn.com/apis/site/v2/sports/football/college-football/summary?event=${gameIds.msuBama}`
 // updated fetch to allow for asynchronous processing//
 const displayData = async () => {
     const jsonData = await fetch (gameURL)
