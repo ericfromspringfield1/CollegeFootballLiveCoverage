@@ -43,6 +43,8 @@
  arkAM: 401237120,
  mizzUF: 401237116,
 
+ 
+
  }
 
  /*
@@ -121,15 +123,30 @@ http://site.api.espn.com/apis/site/v2/sports/football/college-football/teams/vt/
 // }
 // displayGames()
 
-const gameURL = `https://site.api.espn.com/apis/site/v2/sports/football/college-football/summary?event=${gameIds.msuBama}`
-// updated fetch to allow for asynchronous processing//
-const displayData = async () => {
-    const jsonData = await fetch (gameURL)
-    const data = await jsonData.json()
-    console.log(data) 
+function getInputValue(){
+    // Selecting the input element and get its value 
+    var inputVal = document.getElementById("searchInput").value;
+    
 
     
-// old fetch used prior to 9/21/20
+    const gameUrl = `https://site.api.espn.com/apis/site/v2/sports/football/college-football/summary?event=${inputVal}`
+    
+    
+    
+    
+    
+    // updated fetch to allow for asynchronous processing//
+    
+    const displayData = async () => {
+        const jsonData = await fetch (gameUrl)
+        const data = await jsonData.json()
+        console.log(data) 
+        
+    
+         
+    
+        
+        // old fetch used prior to 9/21/20
 /*fetch(nflURL)
 .then(function(resp) {
     return resp.json();
@@ -137,6 +154,9 @@ const displayData = async () => {
 .then(function (data) {
     console.log(data);
 */
+
+
+    
 
     
     // game info container //
@@ -847,10 +867,12 @@ if (data.leaders !== []) {
         awayReceivingStats.style.backgroundColor = `#${awayTeamColor}`
         }
 
- 
-       
+        
+        
+    }
+
+    displayData()
 }
-displayData()
 
 // if data.drives.current.isScore = true 
 // if data.drives.current.team.displayName = "TeamName" ... teamLogo next to name or html football graphic
