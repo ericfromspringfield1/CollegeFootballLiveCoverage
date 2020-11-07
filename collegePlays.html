@@ -9,13 +9,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Quantico:wght@700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Overpass+Mono&display=swap" rel="stylesheet"></head>
 <body>
-
-    <!-- <section id="gamesContainer">
+    <section id="eventsContainer">
         <div id="gameTime"></div>
         <div id="awayTeamScore"></div>
         <div id="homeTeamScore"></div>
-        <button id="btn"></button>
-    </section> -->
+        <button id=game-btn onclick=getClickedGame()></button>
+    </section>
+    
+
+    <section id="gameContainer"></section>
     <div id="searchContainer">
         <input
         class="searchControl"
@@ -24,7 +26,6 @@
         id="searchInput"
         autofocus
         >
-        <button type="button" onclick="getInputValue()">Go To Game</button>
         <button class="searchControl" id="refreshBtn" onClick="window.location.reload();">Go To New Game</button>
 
     <section id="gameInfoContainer">

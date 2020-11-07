@@ -123,27 +123,79 @@ http://site.api.espn.com/apis/site/v2/sports/football/college-football/teams/vt/
 // }
 // displayGames()
 
-function getInputValue(){
-    // Selecting the input element and get its value 
-    var inputVal = document.getElementById("searchInput").value;
-    
+const scoreboardURL = 'http://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?limit=900'
+
+const displayScoreboard = async () => {
+    const jsonData = await fetch (scoreboardURL)
+    const scores = await jsonData.json()
+    console.log(scores) 
 
     
-    const gameUrl = `https://site.api.espn.com/apis/site/v2/sports/football/college-football/summary?event=${inputVal}`
+let gamesList = scores.events.map(game => {
+
+const gameId = game.id
+const gameName = game.name
+const awayScore = game.competitions[0].competitors[1].score
+const homeScore = game.competitions[0].competitors[0].score
+const awayTeamName = game.competitions[0].competitors[1].team.displayName
+const homeTeamName = game.competitions[0].competitors[0].team.displayName
+const awayTeamColor = game.competitions[0].competitors[1].team.color
+const homeTeamColor = game.competitions[0].competitors[0].team.color
+const awayLogo = game.competitions[0].competitors[1].team.logo
+const homeLogo = game.competitions[0].competitors[0].team.logo
+
+
+let awayTeamScore = document.getElementById("awayTeamScore")
+awayTeamScore.style.background = `#${awayTeamColor}`
+
+let homeTeamScore = document.getElementById("homeTeamScore")
+homeTeamScore.style.background = `#${homeTeamColor}`
+
+// const clickedGame = `http://site.api.espn.com/apis/site/v2/sports/football/college-football/summary?event=${gameId}`
+
+function getClickedGame() {
+    // Selecting the input element and get its value 
+   let buttons = document.getElementById('game-btn').addEventListener('click', (event) => {
+       console.log(event.target.buttons)
+       
+       
+    })   
+}
+
+    return `
+    <section id="eventsContainer">
+    <div id="gameTime">${game.status.type.detail}</div>
+    <div id="awayTeamScore" style=background:#${awayTeamColor};><img src="${awayLogo}" width="25" height="25" style=padding:5px;background:white;border-radius:50%;margin-right:4px;>${awayTeamName} ${awayScore}</div>
+    <div id="homeTeamScore" style=background:#${homeTeamColor};><img src="${homeLogo}" width="25" height="25" style=padding:5px;background:white;border-radius:50%;margin-right:4px;>${homeTeamName} ${homeScore}</div>
+    <button id="${gameId}" onclick=${getClickedGame(gameId)}>Follow Live</button>
+    </section>
+    `
+
+
+})    
+
+const theGames = document.getElementById('eventsContainer')
+theGames.innerHTML = gamesList.join('')
+
+}
+displayScoreboard()
+    
+
+
     
     
-    
-    
-    
-    // updated fetch to allow for asynchronous processing//
-    
-    const displayData = async () => {
-        const jsonData = await fetch (gameUrl)
-        const data = await jsonData.json()
-        console.log(data) 
+
+const gameUrl = `https://site.api.espn.com/apis/site/v2/sports/football/college-football/summary?event=401234630`
+ 
+
+        // updated fetch to allow for asynchronous processing//
+        const displayData = async () => {
+            const jsonData = await fetch (gameUrl)
+            const data = await jsonData.json()
+            console.log(data) 
+            
         
-    
-         
+            
     
         
         // old fetch used prior to 9/21/20
@@ -870,9 +922,11 @@ if (data.leaders !== []) {
         
         
     }
+     displayData()
 
-    displayData()
-}
+
+
+
 
 // if data.drives.current.isScore = true 
 // if data.drives.current.team.displayName = "TeamName" ... teamLogo next to name or html football graphic
