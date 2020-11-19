@@ -69,26 +69,64 @@
 
 }
 
-/* video links */
+/* video container */
 #videoContainer {
-    background-color: rgba(0, 0, 0, 0.712);
-    padding: 5px;  
+    
+    background-color: black;
+    padding: 5px;
+    margin-bottom: 3px;  
+    color: white;
 
+}
+
+#sectionHeadline {
+    font-family: 'Quantico', sans-serif;
+    font-size: 1.5rem;
+    color: whitesmoke;
+    text-align: center;
 }
 
 #videoHeadline {
     font-family: 'Overpass Mono', monospace;
+    font-size: 1rem; 
     color: white;
     margin-left: 10px;
+    text-align: center;
 
 }
 
-#video {
+#video { 
     display: inline-block;
-    margin-left: 3%;
+    margin-left: 35%;
     margin-bottom: 5px;
-    margin-top: 1%;
+    
+}
 
+#newsContainer {
+    display: inline-block;
+    background-color: rgba(0, 0, 0, 0.712);
+    padding: 5px;
+    margin: 5px; 
+
+}
+
+#newsSectionHeadline {
+    font-family: 'Overpass Mono', monospace;
+    text-transform: capitalize;
+    font-size: 1.3rem;
+    color: goldenrod;  
+    text-decoration: none;
+    
+    
+}
+
+#newsDescription {
+    color: white;
+    font-family: 'Overpass Mono', monospace;
+    font-size: .85rem; 
+    color: white;
+    margin-left: 5px;
+    display: inline-block;
 }
 
 /* touchdowns/field goals/penalties/etc */

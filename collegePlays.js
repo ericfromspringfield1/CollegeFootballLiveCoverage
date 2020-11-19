@@ -48,7 +48,7 @@ const gameIds = {
     }
    
 
-    const gameUrl = `http://site.api.espn.com/apis/site/v2/sports/football/college-football/summary?event=401237135`
+    const gameUrl = `http://site.api.espn.com/apis/site/v2/sports/football/college-football/summary?event=401249870`
     
     const displayData = async () => {
         const jsonData = await fetch (gameUrl)
@@ -133,22 +133,35 @@ const gameIds = {
     homeScore = 0
 
     // article links, photos, videos //
-    if (data.header.competitions[0].status.type.description === "Scheduled") {
+    
     const video = data.videos[0].links.source.HD.href
     let vidLinks = data.videos.map(vid => {
         return`
-        <section id='videoContainer'>
+        <h1 id='sectionHeadline'></h1>
         <div>
         <video id='video' width="400" height="350" controls><source src=${video}></video>
         <h5 id='videoHeadline'>${vid.headline}</h5>
-           </div>
-        </section>
+        </div>
+     
         `
     })
 
     const theVideos = document.getElementById('videoContainer')
     theVideos.innerHTML = vidLinks.join('')
-}
+
+    let newsLinks = data.news.articles.map(news => {
+        return `
+        <section id='newsContainer'>
+        <div>
+        <a id='newsSectionHeadline'href=${news.links.web.href}>${news.headline}</a>
+        <p id='newsDescription'>${news.description}</p>
+        </div>
+        </section>
+        `
+    })
+    const theNews = document.getElementById('newsContainer')
+    theNews.innerHTML = newsLinks.join('')
+
     
     
     
@@ -421,43 +434,56 @@ const scoringPlays = document.getElementById('scoringPlaysContainer')
     scoringPlays.innerHTML = thePlays.join('')
 }   
 
-        if (data.leaders !== [] || data.leaders !== undefined || data.leaders[0] !== []) {  
-        let homePassingLeader = data.leaders[0].leaders[0].leaders[0].athlete.displayName
-        let homePassingLeaderHeadshot = data.leaders[0].leaders[0].leaders[0].athlete.headshot.href
-        let homePassingLeaderStats = data.leaders[0].leaders[0].leaders[0].displayValue
-        let homePassingLeaderJersey = data.leaders[0].leaders[0].leaders[0].athlete.jersey
-        let homePassingLeaderPosition = data.leaders[0].leaders[0].leaders[0].athlete.position.abbreviation
-        
-        let awayPassingLeader = data.leaders[1].leaders[0].leaders[0].athlete.displayName
-        let awayPassingLeaderHeadshot = data.leaders[1].leaders[0].leaders[0].athlete.headshot.href
-        let awayPassingLeaderStats = data.leaders[1].leaders[0].leaders[0].displayValue
-        let awayPassingLeaderJersey = data.leaders[1].leaders[0].leaders[0].athlete.jersey
-        let awayPassingLeaderPosition = data.leaders[1].leaders[0].leaders[0].athlete.position.abbreviation
-        
-        
-        const homeStatsContainer = document.getElementById('homeStatsContainer')
-        homeStatsContainer.style.border = `2pt solid #${homeTeamColor}`
-        
-        const awayStatsContainer = document.getElementById('awayStatsContainer')
-        awayStatsContainer.style.border = `2pt solid #${awayTeamColor}`
-        
+if (data.leaders !== [] || data.leaders !== undefined || data.leaders[0] !== []) {
+    let homePassingLeader = data.leaders[0].leaders[0].leaders[0].athlete.displayName
+    let homePassingLeaderStats = data.leaders[0].leaders[0].leaders[0].displayValue
+    let homePassingLeaderJersey = data.leaders[0].leaders[0].leaders[0].athlete.jersey
+    let homePassingLeaderPosition = data.leaders[0].leaders[0].leaders[0].athlete.position.abbreviation
+    
+    let awayPassingLeader = data.leaders[1].leaders[1].leaders[0].athlete.displayName
+    let awayPassingLeaderStats = data.leaders[1].leaders[1].leaders[0].displayValue
+    let awayPassingLeaderJersey = data.leaders[1].leaders[1].leaders[0].athlete.jersey
+    let awayPassingLeaderPosition = data.leaders[1].leaders[1].leaders[0].athlete.position.abbreviation
+    
+    if (data.leaders[0].leaders[0].leaders[0].athlete.headshot === undefined) {   
         const homePassingLeaders = document.getElementById('homePassingLeader')
-        homePassingLeaders.innerHTML = `${homeTeamName} Stats <br><img src="${homePassingLeaderHeadshot}" width="100" height="100"> ${homePassingLeaderPosition}${homePassingLeaderJersey}`
         homePassingLeaders.style.color = `#${homeTeamColor}`
+        homePassingLeaders.style.height = '107px'
+
+        } else {
+            let homePassingLeaderHeadshot = data.leaders[0].leaders[0].leaders[0].athlete.headshot.href
+            const homePassingLeaders = document.getElementById('homePassingLeader')
+            homePassingLeaders.innerHTML = `<img src="${homePassingLeaderHeadshot}" width="100" height="100"> ${homePassingLeaderPosition}${homePassingLeaderJersey}`
+            homePassingLeaders.style.color = `#${homeTeamColor}`
+
+        }
+    
         
         const homePassingStats = document.getElementById('homePassingStats')
         homePassingStats.innerHTML = `${homePassingLeader} <br> ${homePassingLeaderStats}`
         homePassingStats.style.backgroundColor = `#${homeTeamColor}`
         
+        if (data.leaders[1].leaders[1].leaders[0].athlete.headshot === undefined) {
+            const awayPassingLeaders = document.getElementById('awayPassingLeader')
+            awayPassingLeaders.style.color = `#${awayTeamColor}`
+            awayPassingLeaders.style.marginTop = "76px"
+            awayPassingLeaders.style.height = '107px'
+
+
+        
+        } else {
+        
         const awayPassingLeaders = document.getElementById('awayPassingLeader')
-        awayPassingLeaders.innerHTML = `${awayTeamName} Stats <br><img src="${awayPassingLeaderHeadshot}" width="100" height="100"> ${awayPassingLeaderPosition}${awayPassingLeaderJersey}`
+        let awayPassingLeaderHeadshot = data.leaders[1].leaders[0].leaders[0].athlete.headshot.href
+        awayPassingLeaders.innerHTML = `<img src="${awayPassingLeaderHeadshot}" width="100" height="100"> ${awayPassingLeaderPosition}${awayPassingLeaderJersey}`
         awayPassingLeaders.style.color = `#${awayTeamColor}`
+        }
         
         const awayPassingStats = document.getElementById('awayPassingStats')
         awayPassingStats.innerHTML = `${awayPassingLeader} <br> ${awayPassingLeaderStats}`
         awayPassingStats.style.backgroundColor = `#${awayTeamColor}`
         }
-        
+    
         // Rushing stats container //
         if (data.leaders !== [] || data.leaders !== undefined || data.leaders[0] !== []) {
         let homeRushingLeader = data.leaders[0].leaders[1].leaders[0].athlete.displayName
