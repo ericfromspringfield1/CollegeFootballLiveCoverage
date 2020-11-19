@@ -42,33 +42,41 @@ const gameIds = {
     msuBama: 401237119,
     arkAM: 401237120,
     mizzUF: 401237116,
+
+    bamaLSU: 401237128,
    
     }
    
-    /*
-   Anyone curious looking for the schedule for a specific CFB team just append "/schedule" to the team information link:
-   http://site.api.espn.com/apis/site/v2/sports/football/college-football/teams/vt/schedule
-    */
-   
-   function getInputValue(){
-    // Selecting the input element and get its value 
-    var inputVal = document.getElementById("searchInput").value;
-    
 
-    
-    const gameUrl = `https://site.api.espn.com/apis/site/v2/sports/football/college-football/summary?event=${inputVal}`
-    
-    
-    
-    
-    
-    // updated fetch to allow for asynchronous processing//
+    const gameUrl = `http://site.api.espn.com/apis/site/v2/sports/football/college-football/summary?event=401237137`
     
     const displayData = async () => {
         const jsonData = await fetch (gameUrl)
         const data = await jsonData.json()
         console.log(data) 
+
+    
         
+            
+            
+            
+            // let theGame = document.getElementById('venue')
+            // theGame.innerHTML = `${gameName}`
+            
+            // let thisPlay = document.getElementById('currentPlayContainer')
+            // thisPlay.innerHTML = `${currentPlay}`
+            
+            
+
+    
+    
+    // updated fetch to allow for asynchronous processing//
+    
+    // const displayData = async () => {
+    //     const jsonData = await fetch (gameUrl)
+    //     .then(fetch(scoreboardURL))
+    //     const data = await jsonData.json()
+    //     console.log(data) 
     
          
     
@@ -83,10 +91,15 @@ const gameIds = {
 */
 
 
-    
 
-    
+// document.getElementById('btn').addEventListener("click", (e) => {
+//     let renderClick = document.getElementsByTagName('body') 
+//     renderClick.innerHTML = e.target.value  
+//     console.log(e.target.value)
+// })
+
     // game info container //
+    const gameId = data.header.competitions.id
     const awayTeamRecord = data.header.competitions[0].competitors[1].record[0].displayValue
     const homeTeamRecord = data.header.competitions[0].competitors[0].record[0].displayValue
     const awayTeamName = data.header.competitions[0].competitors[1].team.displayName
@@ -109,14 +122,16 @@ const gameIds = {
     let venueName = data.gameInfo.venue.fullName
     let venueCity = data.gameInfo.venue.address.city
     let venueState = data.gameInfo.venue.address.state
+    //let currentDrive = dataives.current.description
     homeScoreInt = parseInt(homeScore)
     awayScoreInt = parseInt(awayScore)
+    
     if (awayScore === undefined) 
     awayScore = 0
     
     if (homeScore === undefined)
     homeScore = 0
-    
+        
     // weather - conditional statements by precip chances //
     
     if (data.header.competitions[0].status.type.completed === false || data.header.competitions[0].status.type.description === false){
@@ -222,8 +237,10 @@ venuePhoto.style.display = "none"
     venue.innerHTML = `<img src="${awayDarkLogo}" width="75" height="75"> ${venueName} ${venueCity}, ${venueState} <img src="${homeDarkLogo}" width="75" height="75">`
     venue.style.backgroundColor = `#${homeTeamColor}`
 
+    if (data.header.competitions[0].broadcasts[0] !== undefined) {
     const gameDescription = document.getElementById('gameDescription')
     gameDescription.innerHTML = `Broadcast Live On ${data.header.competitions[0].broadcasts[0].media.shortName}`
+    }
 
     const gameStatus = document.getElementById('gameStatus')
     gameStatus.innerHTML = `${data.header.competitions[0].status.type.detail}`
@@ -240,7 +257,7 @@ venuePhoto.style.display = "none"
 
     } else {
     const awayTeam = document.getElementById('awayTeam')
-    awayTeam.innerHTML = `(${awayTeamRecord}) <img src="${awayDarkLogo}" width="75" height="75"> ${awayRank} ${awayTeamName} ${awayScore}`
+    awayTeam.innerHTML = `(${awayTeamRecord}) <img src="${awayLogo}" width="75" height="75"> ${awayRank} ${awayTeamName} ${awayScore}`
     awayTeam.style.backgroundColor = `#${awayTeamColor}`
     }
 
@@ -293,7 +310,9 @@ venuePhoto.style.display = "none"
                 theLastPlay.innerHTML = `${getLastPlay()}`
                    
         const theDownDistanceIs = document.getElementById('theDownDistanceIs')
-        theDownDistanceIs.innerHTML = `<img src=${driveTeam} width="75" height="75">    ${getDownDistance()}`
+        theDownDistanceIs.innerHTML = `<img src=${driveTeam} width="75" height="75"> ${getDownDistance()}`
+        //**wcurrent drive info added** theDownDistanceIs.innerHTML = `<img src=${driveTeam} width="75" height="75"> ${getDownDistance()} - (${currentDrive})`
+
         }
     }
     
@@ -367,7 +386,7 @@ venuePhoto.style.display = "none"
     }
 } 
 // scoring plays //
-if (data.header.competitions[0].status.type.completed === false && data.header.competitions[0].status.type.description !== "Scheduled") {
+if (data.header.competitions[0].status.type.completed === false && data.header.competitions[0].status.type.description !== "Scheduled" && data.scoringPlays !== undefined) {
 const thePlays = data.scoringPlays.map((play) => {
     
     return `
@@ -631,43 +650,7 @@ if (data.header.competitions[0].status.type.completed === true && data.header.co
                 break     
 
 }
-
    
-
-
-       
-        
-
-       
-
-    
-   /* if (homeScore > awayScore && homeRank > awayRank) {
-        homeWinner = document.getElementById('winner') 
-        homeWinner.innerHTML =`UPSET!!! <br> <img src="${homeDarkLogo}" width="250 height="250"><br>${homeScore} - ${awayScore}`
-        venuePhoto.style.display = 'none'
-        var ofs2 = 0;
-       var el2 = document.getElementById('winner');
-     
-         window.setInterval(function(){
-         el2.style.background = `rgba(0,0,0,${Math.abs(Math.sin(ofs2))})`;
-         ofs2 += 0.01;
-         }, 10);
-       
-    } else {
-    if (homeScore > awayScore) {
-       homeWinner = document.getElementById('winner') 
-       homeWinner.innerHTML = `WINNER <br> <img src="${homeDarkLogo}" width="250 height="250"><br>${homeScore} - ${awayScore}`
-       venuePhoto.style.display = 'none'
-       var ofs2 = 0;
-       var el2 = document.getElementById('winner');
-     
-         window.setInterval(function(){
-         el2.style.background = `rgba(0,0,0,${Math.abs(Math.sin(ofs2))})`;
-         ofs2 += 0.01;
-         }, 10);
-    }  
- }
- */
 console.log(`${awayScore}-${homeScore}`)
 console.log(`${homeRank} ${awayRank}`)
  
@@ -791,31 +774,13 @@ if (data.leaders !== []) {
         awayReceivingStats.style.backgroundColor = `#${awayTeamColor}`
         }
 
-        
-        
-    }
+    
 
+    }  
     displayData()
-}
-
-// if data.drives.current.isScore = true 
-// if data.drives.current.team.displayName = "TeamName" ... teamLogo next to name or html football graphic
-    
 
 
 
-    
-    
-   // map through each stat and return for each player 
-
-
-   // scoring summary //
-   
-   
-   
-   
-   // events //
-   
    
 
    
