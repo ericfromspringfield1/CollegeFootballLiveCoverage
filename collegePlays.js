@@ -48,7 +48,7 @@ const gameIds = {
     }
    
 
-    const gameUrl = `http://site.api.espn.com/apis/site/v2/sports/football/college-football/summary?event=401237137`
+    const gameUrl = `http://site.api.espn.com/apis/site/v2/sports/football/college-football/summary?event=401237135`
     
     const displayData = async () => {
         const jsonData = await fetch (gameUrl)
@@ -131,6 +131,27 @@ const gameIds = {
     
     if (homeScore === undefined)
     homeScore = 0
+
+    // article links, photos, videos //
+    if (data.header.competitions[0].status.type.description === "Scheduled") {
+    const video = data.videos[0].links.source.HD.href
+    let vidLinks = data.videos.map(vid => {
+        return`
+        <section id='videoContainer'>
+        <div>
+        <video id='video' width="400" height="350" controls><source src=${video}></video>
+        <h5 id='videoHeadline'>${vid.headline}</h5>
+           </div>
+        </section>
+        `
+    })
+
+    const theVideos = document.getElementById('videoContainer')
+    theVideos.innerHTML = vidLinks.join('')
+}
+    
+    
+    
         
     // weather - conditional statements by precip chances //
     
@@ -400,7 +421,7 @@ const scoringPlays = document.getElementById('scoringPlaysContainer')
     scoringPlays.innerHTML = thePlays.join('')
 }   
 
-    if (data.leaders !== []) {
+        if (data.leaders !== [] || data.leaders !== undefined || data.leaders[0] !== []) {  
         let homePassingLeader = data.leaders[0].leaders[0].leaders[0].athlete.displayName
         let homePassingLeaderHeadshot = data.leaders[0].leaders[0].leaders[0].athlete.headshot.href
         let homePassingLeaderStats = data.leaders[0].leaders[0].leaders[0].displayValue
@@ -438,39 +459,59 @@ const scoringPlays = document.getElementById('scoringPlaysContainer')
         }
         
         // Rushing stats container //
-        if (data.leaders !== []) {
+        if (data.leaders !== [] || data.leaders !== undefined || data.leaders[0] !== []) {
         let homeRushingLeader = data.leaders[0].leaders[1].leaders[0].athlete.displayName
-        let homeRushingLeaderHeadshot = data.leaders[0].leaders[1].leaders[0].athlete.headshot.href
         let homeRushingLeaderStats = data.leaders[0].leaders[1].leaders[0].displayValue
         let homeRushingLeaderJersey = data.leaders[0].leaders[1].leaders[0].athlete.jersey
         let homeRushingLeaderPosition = data.leaders[0].leaders[1].leaders[0].athlete.position.abbreviation
         
         let awayRushingLeader = data.leaders[1].leaders[1].leaders[0].athlete.displayName
-        let awayRushingLeaderHeadshot = data.leaders[1].leaders[1].leaders[0].athlete.headshot.href
         let awayRushingLeaderStats = data.leaders[1].leaders[1].leaders[0].displayValue
         let awayRushingLeaderJersey = data.leaders[1].leaders[1].leaders[0].athlete.jersey
         let awayRushingLeaderPosition = data.leaders[1].leaders[1].leaders[0].athlete.position.abbreviation
         
-        const homeRushingLeaders = document.getElementById('homeRushingLeader')
-        homeRushingLeaders.innerHTML = `<img src="${homeRushingLeaderHeadshot}" width="100" height="100"> ${homeRushingLeaderPosition}${homeRushingLeaderJersey}`
-        homeRushingLeaders.style.color = `#${homeTeamColor}`
+        if (data.leaders[0].leaders[1].leaders[0].athlete.headshot === undefined) {   
+            const homeRushingLeaders = document.getElementById('homeRushingLeader')
+            homeRushingLeaders.style.color = `#${homeTeamColor}`
+            homeRushingLeaders.style.height = '107px'
+    
+            } else {
+                let homeRushingLeaderHeadshot = data.leaders[0].leaders[1].leaders[0].athlete.headshot.href
+                const homeRushingLeaders = document.getElementById('homeRushingLeader')
+                homeRushingLeaders.innerHTML = `<img src="${homeRushingLeaderHeadshot}" width="100" height="100"> ${homeRushingLeaderPosition}${homeRushingLeaderJersey}`
+                homeRushingLeaders.style.color = `#${homeTeamColor}`
+    
+            }
         
-        const homeRushingStats = document.getElementById('homeRushingStats')
-        homeRushingStats.innerHTML = `${homeRushingLeader} <br> ${homeRushingLeaderStats}`
-        homeRushingStats.style.backgroundColor = `#${homeTeamColor}`
-        
-        const awayRushingLeaders = document.getElementById('awayRushingLeader')
-        awayRushingLeaders.innerHTML = `<img src="${awayRushingLeaderHeadshot}" width="100" height="100"> ${awayRushingLeaderPosition}${awayRushingLeaderJersey}`
-        awayRushingLeaders.style.color = `#${awayTeamColor}`
-        
-        const awayRushingStats = document.getElementById('awayRushingStats')
-        awayRushingStats.innerHTML = `${awayRushingLeader} <br> ${awayRushingLeaderStats}`
-        awayRushingStats.style.backgroundColor = `#${awayTeamColor}`
-        }
+            
+            const homeRushingStats = document.getElementById('homeRushingStats')
+            homeRushingStats.innerHTML = `${homeRushingLeader} <br> ${homeRushingLeaderStats}`
+            homeRushingStats.style.backgroundColor = `#${homeTeamColor}`
+            
+            if (data.leaders[1].leaders[1].leaders[0].athlete.headshot === undefined) {
+                const awayRushingLeaders = document.getElementById('awayRushingLeader')
+                awayRushingLeaders.style.color = `#${awayTeamColor}`
+                awayRushingLeaders.style.marginTop = "76px"
+                awayRushingLeaders.style.height = '107px'
+    
+    
+            
+            } else {
+            
+            const awayRushingLeaders = document.getElementById('awayRushingLeader')
+            let awayRushingLeaderHeadshot = data.leaders[1].leaders[1].leaders[0].athlete.headshot.href
+            awayRushingLeaders.innerHTML = `<img src="${awayRushingLeaderHeadshot}" width="100" height="100"> ${awayRushingLeaderPosition}${awayRushingLeaderJersey}`
+            awayRushingLeaders.style.color = `#${awayTeamColor}`
+            }
+            
+            const awayRushingStats = document.getElementById('awayRushingStats')
+            awayRushingStats.innerHTML = `${awayRushingLeader} <br> ${awayRushingLeaderStats}`
+            awayRushingStats.style.backgroundColor = `#${awayTeamColor}`
+            }
+
         // Receiving stats container //
         if (data.leaders !== [] || data.leaders !== undefined || data.leaders[0] !== []) {
         let homeReceivingLeader = data.leaders[0].leaders[2].leaders[0].athlete.displayName
-        
         let homeReceivingLeaderStats = data.leaders[0].leaders[2].leaders[0].displayValue
         let homeReceivingLeaderJersey = data.leaders[0].leaders[2].leaders[0].athlete.jersey
         let homeReceivingLeaderPosition = data.leaders[0].leaders[2].leaders[0].athlete.position.abbreviation
@@ -481,7 +522,7 @@ const scoringPlays = document.getElementById('scoringPlaysContainer')
         let awayReceivingLeaderPosition = data.leaders[1].leaders[2].leaders[0].athlete.position.abbreviation  
         
         
-    if (data.leaders[0].leaders[2].leaders[0].athlete.headshot === undefined) {   
+        if (data.leaders[0].leaders[2].leaders[0].athlete.headshot === undefined) {   
         const homeReceivingLeaders = document.getElementById('homeReceivingLeader')
         homeReceivingLeaders.style.color = `#${homeTeamColor}`
         homeReceivingLeaders.style.height = '107px'
@@ -697,33 +738,52 @@ if (data.leaders !== []) {
     // Rushing stats container //
     if (data.leaders !== []) {
     let homeRushingLeader = data.leaders[0].leaders[1].leaders[0].athlete.displayName
-    let homeRushingLeaderHeadshot = data.leaders[0].leaders[1].leaders[0].athlete.headshot.href
     let homeRushingLeaderStats = data.leaders[0].leaders[1].leaders[0].displayValue
     let homeRushingLeaderJersey = data.leaders[0].leaders[1].leaders[0].athlete.jersey
     let homeRushingLeaderPosition = data.leaders[0].leaders[1].leaders[0].athlete.position.abbreviation
     
     let awayRushingLeader = data.leaders[1].leaders[1].leaders[0].athlete.displayName
-    let awayRushingLeaderHeadshot = data.leaders[1].leaders[1].leaders[0].athlete.headshot.href
     let awayRushingLeaderStats = data.leaders[1].leaders[1].leaders[0].displayValue
     let awayRushingLeaderJersey = data.leaders[1].leaders[1].leaders[0].athlete.jersey
     let awayRushingLeaderPosition = data.leaders[1].leaders[1].leaders[0].athlete.position.abbreviation
     
-    const homeRushingLeaders = document.getElementById('homeRushingLeader')
-    homeRushingLeaders.innerHTML = `<img src="${homeRushingLeaderHeadshot}" width="100" height="100"> ${homeRushingLeaderPosition}${homeRushingLeaderJersey}`
-    homeRushingLeaders.style.color = `#${homeTeamColor}`
-    
-    const homeRushingStats = document.getElementById('homeRushingStats')
-    homeRushingStats.innerHTML = `${homeRushingLeader} <br> ${homeRushingLeaderStats}`
-    homeRushingStats.style.backgroundColor = `#${homeTeamColor}`
-    
-    const awayRushingLeaders = document.getElementById('awayRushingLeader')
-    awayRushingLeaders.innerHTML = `<img src="${awayRushingLeaderHeadshot}" width="100" height="100"> ${awayRushingLeaderPosition}${awayRushingLeaderJersey}`
-    awayRushingLeaders.style.color = `#${awayTeamColor}`
-    
-    const awayRushingStats = document.getElementById('awayRushingStats')
-    awayRushingStats.innerHTML = `${awayRushingLeader} <br> ${awayRushingLeaderStats}`
-    awayRushingStats.style.backgroundColor = `#${awayTeamColor}`
-    }
+    if (data.leaders[0].leaders[1].leaders[0].athlete.headshot === undefined) {   
+        const homeRushingLeaders = document.getElementById('homeRushingLeader')
+        homeRushingLeaders.style.color = `#${homeTeamColor}`
+        homeRushingLeaders.style.height = '107px'
+        
+        
+        } else {
+            let homeRushingLeaderHeadshot = data.leaders[0].leaders[1].leaders[0].athlete.headshot.href
+            const homeRushingLeaders = document.getElementById('homeRushingLeader')
+            homeRushingLeaders.innerHTML = `<img src="${homeRushingLeaderHeadshot}" width="100" height="100"> ${homeRushingLeaderPosition}${homeRushingLeaderJersey}`
+            homeRushingLeaders.style.color = `#${homeTeamColor}`
+        }
+        
+        const homeRushingStats = document.getElementById('homeRushingStats')
+        homeRushingStats.innerHTML = `${homeRushingLeader} <br> ${homeRushingLeaderStats}`
+        homeRushingStats.style.backgroundColor = `#${homeTeamColor}`
+        
+        if (data.leaders[1].leaders[1].leaders[0].athlete.headshot === undefined) {
+            const awayRushingLeaders = document.getElementById('awayRushingLeader')
+            awayRushingLeaders.innerHTML = `${awayRushingLeaderPosition}${awayRushingLeaderJersey}`
+        awayRushingLeaders.style.color = `#${awayTeamColor}`
+        awayRushingLeaders.style.marginTop = "76px"
+        awayRushingLeaders.style.height = '107px'
+
+        
+        } else {
+        
+        const awayRushingLeaders = document.getElementById('awayRushingLeader')
+        let awayRushingLeaderHeadshot = data.leaders[1].leaders[1].leaders[0].athlete.headshot.href
+        awayRushingLeaders.innerHTML = `<img src="${awayRushingLeaderHeadshot}" width="100" height="100"> ${awayRushingLeaderPosition}${awayRushingLeaderJersey}`
+        awayRushingLeaders.style.color = `#${awayTeamColor}`
+        }
+        
+        const awayRushingStats = document.getElementById('awayRushingStats')
+        awayRushingStats.innerHTML = `${awayRushingLeader} <br> ${awayRushingLeaderStats}`
+        awayRushingStats.style.backgroundColor = `#${awayTeamColor}`
+        }
     // Receiving stats container //
     if (data.leaders !== []) {
     let homeReceivingLeader = data.leaders[0].leaders[2].leaders[0].athlete.displayName
@@ -775,7 +835,7 @@ if (data.leaders !== []) {
         }
 
     
-
+    
     }  
     displayData()
 
