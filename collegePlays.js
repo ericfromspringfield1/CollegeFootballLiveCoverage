@@ -48,7 +48,7 @@ const gameIds = {
     }
    
 
-    const gameUrl = `http://site.api.espn.com/apis/site/v2/sports/football/college-football/summary?event=401249870`
+    const gameUrl = `http://site.api.espn.com/apis/site/v2/sports/football/college-football/summary?event=401237142`
     
     const displayData = async () => {
         const jsonData = await fetch (gameUrl)
@@ -122,6 +122,7 @@ const gameIds = {
     let venueName = data.gameInfo.venue.fullName
     let venueCity = data.gameInfo.venue.address.city
     let venueState = data.gameInfo.venue.address.state
+    //let articleLink = data.article.links.web.href
     //let currentDrive = dataives.current.description
     homeScoreInt = parseInt(homeScore)
     awayScoreInt = parseInt(awayScore)
@@ -133,34 +134,43 @@ const gameIds = {
     homeScore = 0
 
     // article links, photos, videos //
+
+    // const theArticle = document.getElementById('article')
+    // theArticle.innerHTML = `<div><a href="{articleLink}>${data.article.headline}</a><div>`
     
-    const video = data.videos[0].links.source.HD.href
-    let vidLinks = data.videos.map(vid => {
-        return`
-        <h1 id='sectionHeadline'></h1>
-        <div>
-        <video id='video' width="400" height="350" controls><source src=${video}></video>
-        <h5 id='videoHeadline'>${vid.headline}</h5>
-        </div>
+
+
+    // const video = data.videos[0].links.source.HD.href
+    // let vidLinks = data.videos.map(vid => {
+    //     return`
+    //     <h1 id='sectionHeadline'></h1>
+    //     <div>
+    //     <video id='video' width="400" height="350" controls><source src=${video}></video>
+    //     <h5 id='videoHeadline'>${vid.headline}</h5>
+    //     </div>
      
-        `
-    })
+    //     `
+    // })
 
-    const theVideos = document.getElementById('videoContainer')
-    theVideos.innerHTML = vidLinks.join('')
+    // const theVideos = document.getElementById('videoContainer')
+    // theVideos.innerHTML = vidLinks.join('')
 
-    let newsLinks = data.news.articles.map(news => {
-        return `
-        <section id='newsContainer'>
-        <div>
-        <a id='newsSectionHeadline'href=${news.links.web.href}>${news.headline}</a>
-        <p id='newsDescription'>${news.description}</p>
-        </div>
-        </section>
-        `
-    })
-    const theNews = document.getElementById('newsContainer')
-    theNews.innerHTML = newsLinks.join('')
+    
+    
+    
+
+    // let newsLinks = data.news.articles.map(news => {
+    //     return `
+    //     <section id='newsContainer'>
+    //     <div>
+    //     <a id='newsSectionHeadline'href=${news.links.web.href}>${news.headline}</a>
+    //     <p id='newsDescription'>${news.description}</p>
+    //     </div>
+    //     </section>
+    //     `
+    // })
+    // const theNews = document.getElementById('newsContainer')
+    // theNews.innerHTML = newsLinks.join('')
 
     
     
@@ -247,7 +257,9 @@ venuePhoto.style.display = "none"
     switch(data.gameInfo.venue !== undefined) {
         default: 
         let venueImage = data.gameInfo.venue.images[1].href
-        venuePhoto.innerHTML = `<img src="${venueImage}" width="775" height="250"> <img src="${venueImage2}" width="635" height="250">`
+        venuePhoto.innerHTML = `<img src="${venueImage}" width="675" height="250"> <img src="${venueImage2}" width="635" height="250">`
+        venuePhoto.style.justifyContent = 'center';
+        venuePhoto.style.alignItems = 'center'
         break;
 
         case (data.gameInfo.venue.images[0] === undefined && data.gameInfo.venue.images[1] === undefined): 
@@ -256,10 +268,14 @@ venuePhoto.style.display = "none"
 
         case (data.gameInfo.venue.images[1] === undefined):
         venuePhoto.innerHTML = `<img src="${venueImage2}" width="1415" height="400">` 
+        venuePhoto.style.justifyContent = 'center';
+        venuePhoto.style.alignItems = 'center'
         break;
 
         case (data.gameInfo.venue.images[0] === undefined):
         venuePhoto.innerHTML = `<img src="${venueImage}" width="1415" height="400">`
+        venuePhoto.style.justifyContent = 'center';
+        venuePhoto.style.alignItems = 'center'
         break;
 
         
@@ -268,13 +284,49 @@ venuePhoto.style.display = "none"
 
 
     const venue = document.getElementById('venue')
-    venue.innerHTML = `<img src="${awayDarkLogo}" width="75" height="75"> ${venueName} ${venueCity}, ${venueState} <img src="${homeDarkLogo}" width="75" height="75">`
+    venue.innerHTML = `<img src="${awayDarkLogo}" width="75" height="75" align="center"> ${venueName} ${venueCity}, ${venueState} <img src="${homeDarkLogo}" width="75" height="75" align="center">`
     venue.style.backgroundColor = `#${homeTeamColor}`
 
-    if (data.header.competitions[0].broadcasts[0] !== undefined) {
-    const gameDescription = document.getElementById('gameDescription')
-    gameDescription.innerHTML = `Broadcast Live On ${data.header.competitions[0].broadcasts[0].media.shortName}`
+     if (data.header.competitions[0].broadcasts[0] !== undefined) {
+            switch(true) {
+            default: 
+            gameDescription = document.getElementById('gameDescription')
+            gameDescription.innerHTML = `Broadcast Live On ${data.header.competitions[0].broadcasts[0].media.shortName}`
+            break;
+            
+            case (data.header.competitions[0].broadcasts[0].media.shortName === "CBS"): 
+            gameDescription = document.getElementById('gameDescription')
+            gameDescription.innerHTML = `Broadcast Live On ${data.header.competitions[0].broadcasts[0].media.shortName} <img src="sec-on-cbs-logo.png" width="75" height="75" align="center">`
+            break;
+
+            case (data.header.competitions[0].broadcasts[0].media.shortName === "ESPN"): 
+            gameDescription = document.getElementById('gameDescription')
+            gameDescription.innerHTML = `Broadcast Live On ${data.header.competitions[0].broadcasts[0].media.shortName} <img src="espn-logo.png" width="75" height="75" align="center">`
+            break;
+
+            case (data.header.competitions[0].broadcasts[0].media.shortName === "ESPNU"): 
+            gameDescription = document.getElementById('gameDescription')
+            gameDescription.innerHTML = `Broadcast Live On ${data.header.competitions[0].broadcasts[0].media.shortName} <img src="espnu-logo.png" width="75" height="75" align="center">`
+            break;
+
+            case (data.header.competitions[0].broadcasts[0].media.shortName === "SEC Network"): 
+            gameDescription = document.getElementById('gameDescription')
+            gameDescription.innerHTML = `Broadcast Live On ${data.header.competitions[0].broadcasts[0].media.shortName} <img src="sec-network-logo.png" width="75" height="75" align="center">`
+            break;
+
+            case (data.header.competitions[0].broadcasts[0].media.shortName === "ABC"): 
+            gameDescription = document.getElementById('gameDescription')
+            gameDescription.innerHTML = `Broadcast Live On ${data.header.competitions[0].broadcasts[0].media.shortName} <img src="abc-logo.png" width="75" height="75" align="center">`
+            break;
+        
+        }    
+
+    
+    
     }
+
+
+    
 
     const gameStatus = document.getElementById('gameStatus')
     gameStatus.innerHTML = `${data.header.competitions[0].status.type.detail}`
@@ -286,22 +338,23 @@ venuePhoto.style.display = "none"
     
     if (awayRank === undefined) {
     const awayTeam = document.getElementById('awayTeam')
-    awayTeam.innerHTML = `(${awayTeamRecord}) <img src="${awayDarkLogo}" width="75" height="75"> ${awayTeamName} ${awayScore}`
+    awayTeam.innerHTML = `(${awayTeamRecord}) <img src="${awayDarkLogo}" width="75" height="75" align="center"> ${awayTeamName} ${awayScore}`
     awayTeam.style.backgroundColor = `#${awayTeamColor}`
 
     } else {
     const awayTeam = document.getElementById('awayTeam')
-    awayTeam.innerHTML = `(${awayTeamRecord}) <img src="${awayLogo}" width="75" height="75"> ${awayRank} ${awayTeamName} ${awayScore}`
+    awayTeam.innerHTML = `(${awayTeamRecord}) <img src=${awayDarkLogo} width="75" height="75" align="center"> ${awayRank} ${awayTeamName} ${awayScore}`
     awayTeam.style.backgroundColor = `#${awayTeamColor}`
     }
 
     if (homeRank === undefined) {
     const homeTeam = document.getElementById('homeTeam')
-    homeTeam.innerHTML = `(${homeTeamRecord}) <img src="${homeDarkLogo}" width="75" height="75"> ${homeTeamName} ${homeScore}`
+    homeTeam.innerHTML = `(${homeTeamRecord}) <img src=${homeDarkLogo} width="75" height="75" align="center"> ${homeTeamName} ${homeScore}`
     homeTeam.style.backgroundColor = `#${homeTeamColor}`
+   
     } else {
     const homeTeam = document.getElementById('homeTeam')
-    homeTeam.innerHTML = `(${homeTeamRecord}) <img src="${homeDarkLogo}" width="75" height="75"> ${homeRank} ${homeTeamName} ${homeScore}`
+    homeTeam.innerHTML = `(${homeTeamRecord}) <img src=${homeDarkLogo} width="75" height="75" align="center"> ${homeRank} ${homeTeamName} ${homeScore}`
     homeTeam.style.backgroundColor = `#${homeTeamColor}`
     }
 
@@ -309,7 +362,7 @@ venuePhoto.style.display = "none"
     if (data.drives === undefined) {
         document.getElementById('currentPlay').style.display = 'none'; 
     } else {
-    if (data.header.competitions[0].status.type.completed === false || data.header.competitions[0].status.type.description === false) {
+    (data.header.competitions[0].status.type.completed === false || data.header.competitions[0].status.type.description === false) 
        
         let theDownDistance = []
         function getDownDistance() {
@@ -318,6 +371,8 @@ venuePhoto.style.display = "none"
        
            return theDownDistance
     }
+}
+
     
     if (data.drives === undefined) {
         document.getElementById('currentPlay').style.display = 'none'; 
@@ -344,7 +399,7 @@ venuePhoto.style.display = "none"
                 theLastPlay.innerHTML = `${getLastPlay()}`
                    
         const theDownDistanceIs = document.getElementById('theDownDistanceIs')
-        theDownDistanceIs.innerHTML = `<img src=${driveTeam} width="75" height="75"> ${getDownDistance()}`
+        theDownDistanceIs.innerHTML = `<img src=${driveTeam} width="75" height="75"> ${getDownDistance(currentPlay)}`
         //**wcurrent drive info added** theDownDistanceIs.innerHTML = `<img src=${driveTeam} width="75" height="75"> ${getDownDistance()} - (${currentDrive})`
 
         }
@@ -354,7 +409,12 @@ venuePhoto.style.display = "none"
         
         // scoring and other events (TD, FG, Penalties, etc) //
         // touchdown // 
+        
         if (data.header.competitions[0].status.type.completed === false && data.header.competitions[0].status.type.description !== "Scheduled") {
+            if (data.drives.current.result !== "TD") {
+                touchdown = document.getElementById('touchdown')
+                touchdown.style.display = "none"
+            }
         if (data.drives.current.result === "TD")  {
             venuePhoto.style.display = 'none'
             touchdownEvent = data.drives.current.team.displayName
@@ -362,6 +422,7 @@ venuePhoto.style.display = "none"
             touchdown.innerHTML =  `TOUCHDOWN <br> <img src="${driveTeam}" width="250" height="250">`
          }  
         }
+   
         
          // slow fade/flash background behind touchdown message //   
             var ofs = 0;
@@ -379,14 +440,14 @@ venuePhoto.style.display = "none"
         if (data.drives.current.result === "FG") {
             venuePhoto.style.display = 'none'
             fieldGoalEvent = data.drives.current.team.displayName
-            fieldGoal = document.getElementById('fieldGoal')
+            fieldGoal = document.getElementById('scoringPlay')
             fieldGoal.innerHTML =  `Field Goal <br> <img src=${driveTeam} width="250" height="250">` 
 
          }
         }
         // slow fade/flash background behind touchdown message //
         var ofs2 = 0;
-        var el2 = document.getElementById('fieldGoal');
+        var el2 = document.getElementById('touchdown');
     
         window.setInterval(function(){
         el2.style.background = `rgba(0,0,0,${Math.abs(Math.sin(ofs2))})`;
@@ -398,13 +459,13 @@ venuePhoto.style.display = "none"
             if (data.drives.current.result === "Missed FG") {
                 venuePhoto.style.display = 'none'
                 missedFieldGoalEvent = data.drives.current.team.displayName
-                fieldGoal = document.getElementById('fieldGoal')
+                fieldGoal = document.getElementById('touchdown')
                 fieldGoal.innerHTML =  `NO GOOD <br> <img src=${driveTeam} width="250" height="250">` 
             }
         }  
         
         var ofs2 = 0;
-        var el2 = document.getElementById('fieldGoal');
+        var el2 = document.getElementById('touchdown');
     
         window.setInterval(function(){
         el2.style.background = `rgba(0,0,0,${Math.abs(Math.sin(ofs2))})`;
@@ -417,8 +478,8 @@ venuePhoto.style.display = "none"
     
     // if (logo.header.competitions[0].competitors[0].possession === true) {      
      
-    }
-} 
+    
+ 
 // scoring plays //
 if (data.header.competitions[0].status.type.completed === false && data.header.competitions[0].status.type.description !== "Scheduled" && data.scoringPlays !== undefined) {
 const thePlays = data.scoringPlays.map((play) => {
@@ -558,6 +619,7 @@ if (data.leaders !== [] || data.leaders !== undefined || data.leaders[0] !== [])
             const homeReceivingLeaders = document.getElementById('homeReceivingLeader')
             homeReceivingLeaders.innerHTML = `<img src="${homeReceivingLeaderHeadshot}" width="100" height="100"> ${homeReceivingLeaderPosition}${homeReceivingLeaderJersey}`
             homeReceivingLeaders.style.color = `#${homeTeamColor}`
+            homeReceivingLeaders.style.marginTop = "3px"
 
         }
     
@@ -580,6 +642,8 @@ if (data.leaders !== [] || data.leaders !== undefined || data.leaders[0] !== [])
         let awayReceivingLeaderHeadshot = data.leaders[1].leaders[2].leaders[0].athlete.headshot.href
         awayReceivingLeaders.innerHTML = `<img src="${awayReceivingLeaderHeadshot}" width="100" height="100"> ${awayReceivingLeaderPosition}${awayReceivingLeaderJersey}`
         awayReceivingLeaders.style.color = `#${awayTeamColor}`
+        awayReceivingLeaders.style.marginTop = "3px"
+
         }
         
         const awayReceivingStats = document.getElementById('awayReceivingStats')
@@ -620,7 +684,7 @@ if (data.header.competitions[0].status.type.completed === true && data.header.co
         scoringPlays.innerHTML = thePlays.join('')
     }   
     
-
+    
     
 
     /*if (awayScore > homeScore && awayRank > homeRank) {
@@ -650,8 +714,11 @@ if (data.header.competitions[0].status.type.completed === true && data.header.co
     }
     console.log(awayScore > homeScore)
     */
-
+    
     switch (true) {
+        case(!data.header.competitions[0].status.type.completed):
+        document.getElementById('winner').style.display = 'none'
+
         case(awayScoreInt > homeScoreInt && awayRank > homeRank):
          awayWinner = document.getElementById('winner') 
          awayWinner.innerHTML =`UPSET!!! <br> <img src="${awayDarkLogo}" width="250 height="250"><br>${awayScoreInt} - ${homeScoreInt}`

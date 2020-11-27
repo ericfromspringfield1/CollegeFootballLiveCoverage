@@ -1,0 +1,218 @@
+  #gameInfoContainer {
+    grid-row-gap: 10px;
+    grid-template-columns: auto auto auto auto;
+    font-family: 'Quantico', sans-serif;
+    color: white;
+    padding: 10px;
+  }
+  
+  #weather {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 10px;
+    font-size: 30px;
+    text-align: center;
+    grid-column-start: 2;
+    grid-column-end: 2;
+  }
+
+  #venue {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 10px;
+    font-size: 30px;
+    text-align: center;
+    grid-column-start: 1;
+    grid-column-end: 4;
+  }
+
+  #touchdown {
+    padding: 20px;
+    font-size: 30px;
+    text-align: center;
+    margin-top: 3px; 
+    margin-bottom: 3px;
+  }
+
+  #winner {
+    padding: 20px;
+    font-size: 30px;
+    text-align: center;
+    background: white;
+  }
+
+  #venuePhoto {
+    padding: 5px;
+  }
+
+  #penalty {
+    padding: 20px;
+    font-size: 30px;
+    text-align: center;
+  }
+
+  #gameStatus {
+    padding: 5px;;
+    font-size: 20px;
+    text-align: center;
+    grid-column-start: 1;
+    grid-column-end: 1;
+    grid-row-start: 4.5;
+    grid-row-end: 4.5;
+  }
+
+  #gameDescription {
+    padding: 10px;
+    font-size: 20px;
+    text-align: center;
+    color:  rgba(39, 37, 26, 0.966);
+    grid-row-start: 4;
+    grid-row-end: 4;
+    grid-column-start: 1;   
+    grid-column-end: 1;
+  }
+
+  #awayTeam {
+    padding: 10px;
+    font-size: 30px;
+    text-align: center;
+  }
+
+  #homeTeam {
+    padding: 10px;
+    font-size: 30px;
+    text-align: center;
+  }
+
+  #playsContainer {
+    grid-row-gap: 10px;
+    grid-template-columns: subgrid;
+    padding: 10px;
+    grid-column-start: 1;
+    grid-column-end: 2;
+  }
+
+  #currentPlayContainer {
+    grid-row-gap: 10px;
+    grid-template-columns: auto auto auto ;
+    padding: 10px;
+    color: white;
+  }
+  
+  #theDownDistanceIs {
+    background-color: rgba(39, 37, 26, 0.966);
+    padding: 5px;
+    font-size: 20px;
+    text-align: center;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    grid-column-start: 1;
+    grid-column-end: 4;
+    color:  rgba(255, 255, 255, 0.8);
+  }
+
+  #currentPlay {
+    background-color: rgba(39, 37, 26, 0.966);
+    padding: 5px;
+    font-size: 20px;
+    text-align: center;
+    grid-column-start: 1;
+    grid-column-end: 4;
+    color: rgba(255, 255, 255, 0.8);
+
+  }
+
+  #homeStatsContainer {
+    padding: 10px;
+    font-size: 20px;
+    text-align: center;
+    margin-top: 3px;
+    margin-bottom: 3px;
+  }
+
+  #homePassingLeader {
+    padding: 10px;
+    font-size: 20px;
+    text-align: center;    
+  }
+
+  #homePassingStats {
+    padding: 10px;
+    font-size: 20px;
+    text-align: center;
+  }
+  
+  #homeRushingLeader {
+    padding: 10px;
+    font-size: 20px;
+    text-align: center;
+  }
+
+  #homeRushingStats {
+    padding: 10px;
+    font-size: 20px;
+    text-align: center;
+  }
+
+  #homeReceivingLeader {
+    padding: 10px;
+    font-size: 20px;
+    text-align: center;
+  }
+
+  #homeReceivingStats {
+    padding: 10px;
+    font-size: 20px;
+    text-align: center;
+  }
+
+  #awayStatsContainer {
+    padding: 10px;
+    font-size: 20px;
+    text-align: center;
+  }
+  #awayPassingLeader {
+    padding: 10px;
+    font-size: 20px;
+    text-align: center;
+  }
+  #awayPassingStats {
+    padding: 10px;
+    font-size: 20px;
+    text-align: center;
+  }
+  #awayRushingLeader {
+    padding: 10px;
+    font-size: 20px;
+    text-align: center;
+  }
+  #awayRushingStats {
+    padding: 10px;
+    font-size: 20px;
+    text-align: center;
+  }
+  #awayReceivingLeader {
+    padding: 10px;
+    font-size: 20px;
+    text-align: center;
+  }
+  #awayReceivingStats {
+    padding: 10px;
+    font-size: 20px;
+    text-align: center;
+  }
+  #scoringPlaysContainer {
+    padding: 10px;
+    font-size: 20px;
+    text-align: center;
+
+  }
+  #scoringPlays {
+    padding: 5px;
+    font-size: 15px;
+    text-align: center;
+    color: black;
+  }
+
+
+
+
+

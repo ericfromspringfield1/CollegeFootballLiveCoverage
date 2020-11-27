@@ -1,0 +1,89 @@
+#gameInfoContainer {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    color: white;
+  }
+  
+  #gameInfoContainer > div {
+    background-color: #f1f1f1;
+    text-align: center;
+    line-height: 50px;
+    font-size: 25px;
+    
+  }
+
+  #weather {
+    font-family: 'Quantico', sans-serif;
+  }
+
+  #venue {
+    font-family: 'Quantico', sans-serif;
+  }
+
+  #touchdown {
+    font-family: 'Quantico', sans-serif;
+  }
+
+  #winner {
+    font-family: 'Quantico', sans-serif;
+    background-color: white;
+  }
+
+  #venuePhoto {
+    margin-top: 3px;
+  }
+
+  #gameDescription {
+    color: rgb(26, 25, 25);
+    font-family: 'Overpass Mono', monospace;
+    background-color: #f1f1f1;
+    margin-bottom: 2px;
+
+  }
+
+  #gameStatus {
+    font-family: 'Quantico', sans-serif;
+  }
+
+  #awayTeam {
+    font-family: 'Quantico', sans-serif;
+    padding: 3px;
+  }
+
+  #homeTeam {
+    font-family: 'Quantico', sans-serif;
+    padding: 3px;
+  }
+
+  #playsContainer {
+    font-family: 'Quantico', sans-serif;
+  }
+
+  #currentPlayContainer {
+    font-family: 'Quantico', sans-serif;
+  }
+
+  #homeStatsContainer {
+    font-family: 'Quantico', sans-serif;
+    margin: 5px;
+ 
+  }
+
+  #awayStatsContainer {
+    font-family: 'Quantico', sans-serif;
+    margin: 5px;
+ 
+  }
+
+  #scoringPlays {
+    font-family: 'Quantico', sans-serif;
+    align-self: flex-end;
+    padding: 5px;
+    color: rgb(43, 41, 41);
+    margin: 5px;
+  }
+
+
+
+

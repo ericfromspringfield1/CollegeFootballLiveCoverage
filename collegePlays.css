@@ -69,14 +69,21 @@
 
 }
 
+#imageContainer {
+display: inline-block;
+
+}
+
+#imageHeadline {
+
+}
+
 /* video container */
 #videoContainer {
-    
     background-color: black;
     padding: 5px;
     margin-bottom: 3px;  
     color: white;
-
 }
 
 #sectionHeadline {
@@ -145,7 +152,6 @@
     font-size: 3rem;
     color: white;
     text-align: center;
-
 }
 
 /* SCORE */
@@ -161,8 +167,8 @@
 #homeTeam {
     color: whitesmoke;
     font-family: 'Quantico', sans-serif;
-    padding: 3px;
-    font-size: 2rem;
+    padding: 8px;
+    font-size: 2.5rem;
     margin-right: 45%;
 
 }
@@ -170,8 +176,8 @@
 #awayTeam {
     color: whitesmoke;
     font-family: 'Quantico', sans-serif;
-    padding: 3px;
-    font-size: 2rem;
+    padding: 8px;
+    font-size: 2.5rem;
     margin-right: 45%;
 
     }
