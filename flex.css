@@ -8,13 +8,13 @@
   #gameInfoContainer > div {
     background-color: #f1f1f1;
     text-align: center;
-    line-height: 50px;
+    line-height: 35px;
     font-size: 25px;
     
   }
 
   #weather {
-    font-family: 'Quantico', sans-serif;
+    font-family: 'Overpass Mono', monospace;
   }
 
   #venue {
@@ -34,26 +34,43 @@
     margin-top: 3px;
   }
 
+  #theDownDistanceIs {
+    background-color: rgba(0, 0, 0, 0.767);
+    color: whitesmoke;
+  }
+
+  #currentPlay {
+    background-color: rgba(245, 212, 22, 0.966);
+    color: black;
+
+  }
+
   #gameDescription {
     color: rgb(26, 25, 25);
     font-family: 'Overpass Mono', monospace;
     background-color: #f1f1f1;
     margin-bottom: 2px;
+    margin-top: 2px;
 
   }
 
   #gameStatus {
     font-family: 'Quantico', sans-serif;
+    margin-top: 2px;
+    margin-bottom: 2px;
   }
 
   #awayTeam {
     font-family: 'Quantico', sans-serif;
     padding: 3px;
+    
   }
 
   #homeTeam {
     font-family: 'Quantico', sans-serif;
     padding: 3px;
+    margin-bottom: 3px;
+
   }
 
   #playsContainer {

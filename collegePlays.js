@@ -189,29 +189,29 @@ const gameIds = {
       
     switch (true)  {
 
-        case (data.header.competitions[0].status.type.description === "Scheduled" && weatherPrecip >= 0 && weatherPrecip < 20):
-        weather = document.getElementById('weather')
-        weather.innerHTML = `High ${weatherTeamHigh}&#176 / Low ${weatherTempLow}&#176 &#x26C5` 
-        weather.style.color = `#${homeTeamColor}`
-        break;
+        // case (data.header.competitions[0].status.type.description === "Scheduled" && weatherPrecip >= 0 && weatherPrecip < 20):
+        // weather = document.getElementById('weather')
+        // weather.innerHTML = `High ${weatherTeamHigh}&#176 / Low ${weatherTempLow}&#176 &#x26C5` 
+        // weather.style.color = `#${homeTeamColor}`
+        // break;
 
-        case (data.header.competitions[0].status.type.description === "Scheduled" && weatherPrecip > 50 && weatherPrecip > 20):
-        weather = document.getElementById('weather')
-        weather.innerHTML = `High ${weatherTeamHigh}&#176 / Low ${weatherTempLow}&#176 &#x1F326` 
-        weather.style.color = `#${homeTeamColor}`
-        break;
+        // case (data.header.competitions[0].status.type.description === "Scheduled" && weatherPrecip > 50 && weatherPrecip > 20):
+        // weather = document.getElementById('weather')
+        // weather.innerHTML = `High ${weatherTeamHigh}&#176 / Low ${weatherTempLow}&#176 &#x1F326` 
+        // weather.style.color = `#${homeTeamColor}`
+        // break;
 
-        case (data.header.competitions[0].status.type.description === "Scheduled" && weatherPrecip > 50 && weatherPrecip < 70):
-        weather = document.getElementById('weather')
-        weather.innerHTML = `High ${weatherTeamHigh}&#176 / Low ${weatherTempLow}&#176 &#x1F326` 
-        weather.style.color = `#${homeTeamColor}`
-        break;
+        // case (data.header.competitions[0].status.type.description === "Scheduled" && weatherPrecip > 50 && weatherPrecip < 70):
+        // weather = document.getElementById('weather')
+        // weather.innerHTML = `High ${weatherTeamHigh}&#176 / Low ${weatherTempLow}&#176 &#x1F326` 
+        // weather.style.color = `#${homeTeamColor}`
+        // break;
 
-        case (data.header.competitions[0].status.type.description === "Scheduled" && weatherPrecip > 70):
-        weather = document.getElementById('weather')
-        weather.innerHTML = `High ${weatherTeamHigh}&#176 / Low ${weatherTempLow}&#176 &#x1F327` 
-        weather.style.color = `#${homeTeamColor}`
-        break;
+        // case (data.header.competitions[0].status.type.description === "Scheduled" && weatherPrecip > 70):
+        // weather = document.getElementById('weather')
+        // weather.innerHTML = `High ${weatherTeamHigh}&#176 / Low ${weatherTempLow}&#176 &#x1F327` 
+        // weather.style.color = `#${homeTeamColor}`
+        // break;
 
             case (weatherPrecip >= 0 && weatherPrecip < 20):
                 weather = document.getElementById('weather')
@@ -485,7 +485,7 @@ if (data.header.competitions[0].status.type.completed === false && data.header.c
 const thePlays = data.scoringPlays.map((play) => {
     
     return `
-    <div id="scoringPlays"><img src="${play.team.logo}" width="30" height="30"> ${play.text} | QTR${play.period.number} | ${play.clock.displayValue} | <img src="${awayDarkLogo}"width="25" height="25">  ${play.awayScore} - ${play.homeScore}  <img src="${homeDarkLogo}"width="25" height="25"></div>
+    <div id="scoringPlays"><img src="${play.team.logo}" width="40" height="40" align="center"> ${play.text} | QTR${play.period.number} | ${play.clock.displayValue} | <img src="${awayDarkLogo}"width="30" height="30" align="center">  ${play.awayScore} - ${play.homeScore}  <img src="${homeDarkLogo}"width="30" height="30" align="center"></div>
     `
 })
 
@@ -674,7 +674,7 @@ if (data.header.competitions[0].status.type.completed === true && data.header.co
     const thePlays = data.scoringPlays.map((play) => {
         
         return `
-        <div id="scoringPlays"><img src="${play.team.logo}" width="30" height="30"> ${play.text} | QTR${play.period.number} | ${play.clock.displayValue} | <img src="${awayDarkLogo}"width="25" height="25">  ${play.awayScore} - ${play.homeScore}  <img src="${homeDarkLogo}"width="25" height="25"></div>
+        <div id="scoringPlays"><img src="${play.team.logo}" width="40" height="40" align="center"> ${play.text} | QTR${play.period.number} | ${play.clock.displayValue} | <img src="${awayDarkLogo}"width="30" height="30" align="center">  ${play.awayScore} - ${play.homeScore}  <img src="${homeDarkLogo}"width="30" height="30" align="center"></div>
         `
     })
     
