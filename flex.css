@@ -81,15 +81,29 @@
     font-family: 'Quantico', sans-serif;
   }
 
+  #statsContainer {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+      align-content: center;   
+  }
+
   #homeStatsContainer {
     font-family: 'Quantico', sans-serif;
     margin: 5px;
+    flex-grow: 1;
  
+  }
+
+  #theHomeReceivingLeader {
+      margin-bottom: 1.1px;
   }
 
   #awayStatsContainer {
     font-family: 'Quantico', sans-serif;
     margin: 5px;
+    flex-grow: 1
  
   }
 

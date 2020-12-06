@@ -48,7 +48,7 @@ const gameIds = {
     }
    
 
-    const gameUrl = `http://site.api.espn.com/apis/site/v2/sports/football/college-football/summary?event=401237142`
+    const gameUrl = `http://site.api.espn.com/apis/site/v2/sports/football/college-football/summary?event=401265817`
     
     const displayData = async () => {
         const jsonData = await fetch (gameUrl)
@@ -187,31 +187,31 @@ const gameIds = {
     let weatherTeamHigh = data.gameInfo.weather.highTemperature
     let weatherTempLow = data.gameInfo.weather.lowTemperature
       
-    switch (true)  {
+     switch (true)  {
 
-        // case (data.header.competitions[0].status.type.description === "Scheduled" && weatherPrecip >= 0 && weatherPrecip < 20):
-        // weather = document.getElementById('weather')
-        // weather.innerHTML = `High ${weatherTeamHigh}&#176 / Low ${weatherTempLow}&#176 &#x26C5` 
-        // weather.style.color = `#${homeTeamColor}`
-        // break;
+    //     case (data.header.competitions[0].status.type.description === "Scheduled" && weatherPrecip >= 0 && weatherPrecip < 20):
+    //     weather = document.getElementById('weather')
+    //     weather.innerHTML = `High ${weatherTeamHigh}&#176 / Low ${weatherTempLow}&#176 &#x26C5` 
+    //     weather.style.color = `#${homeTeamColor}`
+    //     break;
 
-        // case (data.header.competitions[0].status.type.description === "Scheduled" && weatherPrecip > 50 && weatherPrecip > 20):
-        // weather = document.getElementById('weather')
-        // weather.innerHTML = `High ${weatherTeamHigh}&#176 / Low ${weatherTempLow}&#176 &#x1F326` 
-        // weather.style.color = `#${homeTeamColor}`
-        // break;
+    //     case (data.header.competitions[0].status.type.description === "Scheduled" && weatherPrecip > 50 && weatherPrecip > 20):
+    //     weather = document.getElementById('weather')
+    //     weather.innerHTML = `High ${weatherTeamHigh}&#176 / Low ${weatherTempLow}&#176 &#x1F326` 
+    //     weather.style.color = `#${homeTeamColor}`
+    //     break;
 
-        // case (data.header.competitions[0].status.type.description === "Scheduled" && weatherPrecip > 50 && weatherPrecip < 70):
-        // weather = document.getElementById('weather')
-        // weather.innerHTML = `High ${weatherTeamHigh}&#176 / Low ${weatherTempLow}&#176 &#x1F326` 
-        // weather.style.color = `#${homeTeamColor}`
-        // break;
+    //     case (data.header.competitions[0].status.type.description === "Scheduled" && weatherPrecip > 50 && weatherPrecip < 70):
+    //     weather = document.getElementById('weather')
+    //     weather.innerHTML = `High ${weatherTeamHigh}&#176 / Low ${weatherTempLow}&#176 &#x1F326` 
+    //     weather.style.color = `#${homeTeamColor}`
+    //     break;
 
-        // case (data.header.competitions[0].status.type.description === "Scheduled" && weatherPrecip > 70):
-        // weather = document.getElementById('weather')
-        // weather.innerHTML = `High ${weatherTeamHigh}&#176 / Low ${weatherTempLow}&#176 &#x1F327` 
-        // weather.style.color = `#${homeTeamColor}`
-        // break;
+    //     case (data.header.competitions[0].status.type.description === "Scheduled" && weatherPrecip > 70):
+    //     weather = document.getElementById('weather')
+    //     weather.innerHTML = `High ${weatherTeamHigh}&#176 / Low ${weatherTempLow}&#176 &#x1F327` 
+    //     weather.style.color = `#${homeTeamColor}`
+    //     break;
 
             case (weatherPrecip >= 0 && weatherPrecip < 20):
                 weather = document.getElementById('weather')
@@ -318,6 +318,11 @@ venuePhoto.style.display = "none"
             gameDescription = document.getElementById('gameDescription')
             gameDescription.innerHTML = `Broadcast Live On ${data.header.competitions[0].broadcasts[0].media.shortName} <img src="abc-logo.png" width="75" height="75" align="center">`
             break;
+
+            case (data.header.competitions[0].broadcasts[0].media.shortName === "NBC"): 
+            gameDescription = document.getElementById('gameDescription')
+            gameDescription.innerHTML = `Broadcast Live On ${data.header.competitions[0].broadcasts[0].media.shortName} <img src="nbc-logo.png" width="75" height="50" align="center">`
+            break;
         
         }    
 
@@ -327,7 +332,6 @@ venuePhoto.style.display = "none"
 
 
     
-
     const gameStatus = document.getElementById('gameStatus')
     gameStatus.innerHTML = `${data.header.competitions[0].status.type.detail}`
     gameStatus.style.backgroundColor = `#${homeTeamColor}`
@@ -399,7 +403,7 @@ venuePhoto.style.display = "none"
                 theLastPlay.innerHTML = `${getLastPlay()}`
                    
         const theDownDistanceIs = document.getElementById('theDownDistanceIs')
-        theDownDistanceIs.innerHTML = `<img src=${driveTeam} width="75" height="75"> ${getDownDistance(currentPlay)}`
+        theDownDistanceIs.innerHTML = `<img src=${driveTeam} width="75" height="75" align='center'> ${getDownDistance(currentPlay)}`
         //**wcurrent drive info added** theDownDistanceIs.innerHTML = `<img src=${driveTeam} width="75" height="75"> ${getDownDistance()} - (${currentDrive})`
 
         }
@@ -806,10 +810,10 @@ if (data.leaders !== []) {
     let awayPassingLeaderPosition = data.leaders[1].leaders[0].leaders[0].athlete.position.abbreviation
     
     const homeStatsContainer = document.getElementById('homeStatsContainer')
-    homeStatsContainer.style.border = `2pt solid #${homeTeamColor}`
+    homeStatsContainer.style.border = `5pt solid #${homeTeamColor}`
     
     const awayStatsContainer = document.getElementById('awayStatsContainer')
-    awayStatsContainer.style.border = `2pt solid #${awayTeamColor}`
+    awayStatsContainer.style.border = `5pt solid #${awayTeamColor}`
     
     const homePassingLeaders = document.getElementById('homePassingLeader')
     homePassingLeaders.innerHTML = `${homeTeamName} Stats <br><img src="${homePassingLeaderHeadshot}" width="100" height="100"> ${homePassingLeaderPosition}${homePassingLeaderJersey}`
@@ -927,19 +931,5 @@ if (data.leaders !== []) {
         awayReceivingStats.style.backgroundColor = `#${awayTeamColor}`
         }
 
-    
-    
     }  
     displayData()
-
-
-
-   
-
-   
-      
-        
-   
-
-   
-   
