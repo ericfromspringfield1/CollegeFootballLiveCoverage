@@ -48,7 +48,7 @@ const gameIds = {
     }
    
 
-    const gameUrl = `http://site.api.espn.com/apis/site/v2/sports/football/college-football/summary?event=401265817`
+    const gameUrl = `https://site.api.espn.com/apis/site/v2/sports/football/college-football/summary?event=401260157`
     
     const displayData = async () => {
         const jsonData = await fetch (gameUrl)
@@ -81,17 +81,6 @@ const gameIds = {
          
     
         
-        // old fetch used prior to 9/21/20
-/*fetch(nflURL)
-.then(function(resp) {
-    return resp.json();
-})
-.then(function (data) {
-    console.log(data);
-*/
-
-
-
 // document.getElementById('btn').addEventListener("click", (e) => {
 //     let renderClick = document.getElementsByTagName('body') 
 //     renderClick.innerHTML = e.target.value  
@@ -187,31 +176,31 @@ const gameIds = {
     let weatherTeamHigh = data.gameInfo.weather.highTemperature
     let weatherTempLow = data.gameInfo.weather.lowTemperature
       
-     switch (true)  {
+     switch (true)  {   
 
-    //     case (data.header.competitions[0].status.type.description === "Scheduled" && weatherPrecip >= 0 && weatherPrecip < 20):
-    //     weather = document.getElementById('weather')
-    //     weather.innerHTML = `High ${weatherTeamHigh}&#176 / Low ${weatherTempLow}&#176 &#x26C5` 
-    //     weather.style.color = `#${homeTeamColor}`
-    //     break;
+        case (data.header.competitions[0].status.type.description === "Scheduled" && weatherPrecip >= 0 && weatherPrecip < 20):
+        weather = document.getElementById('weather')
+        weather.innerHTML = `High ${weatherTeamHigh}&#176 / Low ${weatherTempLow}&#176 &#x26C5` 
+        weather.style.color = `#${homeTeamColor}`
+        break;
 
-    //     case (data.header.competitions[0].status.type.description === "Scheduled" && weatherPrecip > 50 && weatherPrecip > 20):
-    //     weather = document.getElementById('weather')
-    //     weather.innerHTML = `High ${weatherTeamHigh}&#176 / Low ${weatherTempLow}&#176 &#x1F326` 
-    //     weather.style.color = `#${homeTeamColor}`
-    //     break;
+        case (data.header.competitions[0].status.type.description === "Scheduled" && weatherPrecip > 50 && weatherPrecip > 20):
+        weather = document.getElementById('weather')
+        weather.innerHTML = `High ${weatherTeamHigh}&#176 / Low ${weatherTempLow}&#176 &#x1F326` 
+        weather.style.color = `#${homeTeamColor}`
+        break;
 
-    //     case (data.header.competitions[0].status.type.description === "Scheduled" && weatherPrecip > 50 && weatherPrecip < 70):
-    //     weather = document.getElementById('weather')
-    //     weather.innerHTML = `High ${weatherTeamHigh}&#176 / Low ${weatherTempLow}&#176 &#x1F326` 
-    //     weather.style.color = `#${homeTeamColor}`
-    //     break;
+        case (data.header.competitions[0].status.type.description === "Scheduled" && weatherPrecip > 50 && weatherPrecip < 70):
+        weather = document.getElementById('weather')
+        weather.innerHTML = `High ${weatherTeamHigh}&#176 / Low ${weatherTempLow}&#176 &#x1F326` 
+        weather.style.color = `#${homeTeamColor}`
+        break;
 
-    //     case (data.header.competitions[0].status.type.description === "Scheduled" && weatherPrecip > 70):
-    //     weather = document.getElementById('weather')
-    //     weather.innerHTML = `High ${weatherTeamHigh}&#176 / Low ${weatherTempLow}&#176 &#x1F327` 
-    //     weather.style.color = `#${homeTeamColor}`
-    //     break;
+        case (data.header.competitions[0].status.type.description === "Scheduled" && weatherPrecip > 70):
+        weather = document.getElementById('weather')
+        weather.innerHTML = `High ${weatherTeamHigh}&#176 / Low ${weatherTempLow}&#176 &#x1F327` 
+        weather.style.color = `#${homeTeamColor}`
+        break;
 
             case (weatherPrecip >= 0 && weatherPrecip < 20):
                 weather = document.getElementById('weather')
@@ -309,9 +298,9 @@ venuePhoto.style.display = "none"
             gameDescription.innerHTML = `Broadcast Live On ${data.header.competitions[0].broadcasts[0].media.shortName} <img src="espnu-logo.png" width="75" height="75" align="center">`
             break;
 
-            case (data.header.competitions[0].broadcasts[0].media.shortName === "SEC Network"): 
+            case (data.header.competitions[0].broadcasts[0].media.shortName === "SECN"): 
             gameDescription = document.getElementById('gameDescription')
-            gameDescription.innerHTML = `Broadcast Live On ${data.header.competitions[0].broadcasts[0].media.shortName} <img src="sec-network-logo.png" width="75" height="75" align="center">`
+            gameDescription.innerHTML = `Broadcast Live On ${data.header.competitions[0].broadcasts[0].media.shortName} <img src="sec-network-logo.png" width="125" height="75" align="center">`
             break;
 
             case (data.header.competitions[0].broadcasts[0].media.shortName === "ABC"): 
@@ -393,7 +382,7 @@ venuePhoto.style.display = "none"
 }
 
 
-        if (data.drives === undefined) {
+        if (data.drives === undefined || data.drives === null) {
             document.getElementById('currentPlay').style.display = 'none'; 
 
         } else {
@@ -410,8 +399,9 @@ venuePhoto.style.display = "none"
     }
     
     
+    
         
-        // scoring and other events (TD, FG, Penalties, etc) //
+// scoring and other events (TD, FG, Penalties, etc) //
         // touchdown // 
         
         if (data.header.competitions[0].status.type.completed === false && data.header.competitions[0].status.type.description !== "Scheduled") {
@@ -444,7 +434,7 @@ venuePhoto.style.display = "none"
         if (data.drives.current.result === "FG") {
             venuePhoto.style.display = 'none'
             fieldGoalEvent = data.drives.current.team.displayName
-            fieldGoal = document.getElementById('scoringPlay')
+            fieldGoal = document.getElementById('touchdown')
             fieldGoal.innerHTML =  `Field Goal <br> <img src=${driveTeam} width="250" height="250">` 
 
          }
@@ -929,6 +919,97 @@ if (data.leaders !== []) {
         const awayReceivingStats = document.getElementById('awayReceivingStats')
         awayReceivingStats.innerHTML = `${awayReceivingLeader} <br> ${awayReceivingLeaderStats}`
         awayReceivingStats.style.backgroundColor = `#${awayTeamColor}`
+        }
+
+        var field;
+        $(document).ready(function(){
+            field = new Field('canvas');
+            field.setStartingPoint();
+            field.markPlay();
+            field.markPlay();
+            console.log(field.yardsToGo(34));
+            field.markPlay();
+            field.firstDownLine();
+        });
+        function Field(elementId){	
+            this.currentPoint = 0;
+            this.currentPlayY = 10;
+            
+            this.ctx = document.getElementById(elementId).getContext('2d');
+            
+            this.draw = function(){
+                    this.ctx.fillStyle = "rgb(0, 153, 41)"
+                    this.ctx.fillRect(0, 0, 720, 300);
+                    this.fillEndZones();
+                    this.createLines();
+            }
+            
+            this.createLines = function(){
+                this.ctx.strokeStyle = "rgb(255, 255, 255)";
+                this.ctx.lineWidth = 2;
+                
+                //create yard lines
+                for(var i = 0; i < 11; i++){
+                    this.drawLine(60 + i*60);
+                }
+            }
+            
+             this.drawLine = function(x){
+                this.ctx.beginPath();
+                this.ctx.moveTo(x, 0);
+                this.ctx.lineTo(x, 300);
+                this.ctx.stroke();
+            }
+            
+            this.fillEndZones = function(){
+                this.ctx.fillStyle = `#${awayTeamColor}`; 
+                this.ctx.fillRect(0, 0, 60, 300);
+                this.ctx.fillStyle = `#${homeTeamColor}`;
+                this.ctx.fillRect(660, 0, 60, 300);
+            }
+            
+            this.setStartingPoint = function(yards){
+                this.currentPoint = yards * 2 * 3 + 60;
+            }
+            
+            this.markPlay = function(yards){
+                endPoint = this.currentPoint + yards * 3 * 2;
+                if(endPoint > 660)
+                    endPoint = 660;
+                
+                this.ctx.strokeStyle = "blue";
+                this.ctx.lineWidth = 10;
+                
+                this.ctx.beginPath();
+                this.ctx.moveTo(this.currentPoint, this.currentPlayY);
+                this.ctx.lineTo(endPoint - 4, this.currentPlayY);
+                this.ctx.stroke();
+                
+                this.ctx.beginPath();
+                this.ctx.strokeStyle = "black";
+                this.ctx.moveTo(endPoint - 4, this.currentPlayY);
+                this.ctx.lineTo(endPoint, this.currentPlayY);
+                this.ctx.stroke();
+                
+                this.currentPoint = endPoint;
+                this.currentPlayY = this.currentPlayY + 12;
+            }
+            
+            this.yardsToGo = function(){
+                var result = (660 - this.currentPoint) / 2 / 3;
+                return result;
+            }
+            
+            this.firstDownLine = function(yardLine){
+                this.ctx.beginPath();
+                this.ctx.moveTo(yardLine * 2 * 3 + 60, 0);
+                this.ctx.lineTo(yardLine * 2 * 3 + 60, 300);
+                this.ctx.strokeStyle = "yellow";
+                this.ctx.lineWidth = 2;
+                this.ctx.stroke();
+            }
+            
+            this.draw();
         }
 
     }  

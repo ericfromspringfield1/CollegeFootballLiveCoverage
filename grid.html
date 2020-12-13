@@ -8,12 +8,14 @@
     <link rel="stylesheet" href="flex.css">
     <link href="https://fonts.googleapis.com/css2?family=Quantico:wght@700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Overpass+Mono&display=swap" rel="stylesheet"></head>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
     <body>
     
     <div id="gameInfoContainer">
         <div id='weather'></div>
         <div id='venue'></div>
         <div id='touchdown'></div>
+        <div id='fieldGoal'></div>
         <div id='winner'></div>
         <div id='venuePhoto'></div>
         <div id='gameDescription'></div>
@@ -46,12 +48,14 @@
         <div id="scoringPlaysContainer">
         <div id="scoringPlays"></div>
         </div> 
-    
     </div>
+    <canvas style="border: 2px black solid;" id="canvas" width="720" height="300"></canvas>
+
 
   <script src="collegePlays.js"></script> 
   <script src="collegeScoreboard.js"></script>
   <script src="test.js"></script>
+  <script src="field.js"></script>
   </body>
   </html>
   
