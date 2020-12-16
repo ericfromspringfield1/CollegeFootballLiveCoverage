@@ -44,11 +44,12 @@ const gameIds = {
     mizzUF: 401237116,
 
     bamaLSU: 401237128,
+    bamaUf: 401237074,
    
     }
    
 
-    const gameUrl = `https://site.api.espn.com/apis/site/v2/sports/football/college-football/summary?event=401260157`
+    const gameUrl = `https://site.api.espn.com/apis/site/v2/sports/football/college-football/summary?event=401251100`
     
     const displayData = async () => {
         const jsonData = await fetch (gameUrl)
@@ -111,6 +112,9 @@ const gameIds = {
     let venueName = data.gameInfo.venue.fullName
     let venueCity = data.gameInfo.venue.address.city
     let venueState = data.gameInfo.venue.address.state
+    let pointSpread = data.pickcenter[0].details
+
+    
     //let articleLink = data.article.links.web.href
     //let currentDrive = dataives.current.description
     homeScoreInt = parseInt(homeScore)
@@ -236,16 +240,16 @@ const gameIds = {
 }
 
 
-let venueImage2 = data.gameInfo.venue.images[0].href
-let venuePhoto = document.getElementById('venuePhoto')
-
-if (data.header.competitions[0].status.type.description !== "Scheduled"){
-venuePhoto.style.display = "none"
-}
+    //If game has started and/or gone final, venue images do not appear during Live game info or final score "Winner" sequence 
+    if (data.header.competitions[0].status.type.description !== "Scheduled"){
+    venuePhoto.style.display = "none"
+    }
     // if no images or only one image is in the gameInfo images array, everything else can load and images will not be undefined //
     switch(data.gameInfo.venue !== undefined) {
         default: 
         let venueImage = data.gameInfo.venue.images[1].href
+        let venueImage2 = data.gameInfo.venue.images[0].href
+        let venuePhoto = document.getElementById('venuePhoto')
         venuePhoto.innerHTML = `<img src="${venueImage}" width="675" height="250"> <img src="${venueImage2}" width="635" height="250">`
         venuePhoto.style.justifyContent = 'center';
         venuePhoto.style.alignItems = 'center'
@@ -271,16 +275,18 @@ venuePhoto.style.display = "none"
     
     }  
 
-
+    const championshipWeekend = data.header.gameNote
     const venue = document.getElementById('venue')
-    venue.innerHTML = `<img src="${awayDarkLogo}" width="75" height="75" align="center"> ${venueName} ${venueCity}, ${venueState} <img src="${homeDarkLogo}" width="75" height="75" align="center">`
+    if (championshipWeekend !== undefined){
+    venue.innerHTML = `<img src="${awayDarkLogo}" width="75" height="75" align="center"> ${championshipWeekend} | ${venueName} ${venueCity}, ${venueState} <img src="${homeDarkLogo}" width="75" height="75" align="center">`
     venue.style.backgroundColor = `#${homeTeamColor}`
+    }
 
      if (data.header.competitions[0].broadcasts[0] !== undefined) {
             switch(true) {
             default: 
             gameDescription = document.getElementById('gameDescription')
-            gameDescription.innerHTML = `Broadcast Live On ${data.header.competitions[0].broadcasts[0].media.shortName}`
+            gameDescription.innerHTML = `${pointSpread} <br> Broadcast Live On ${data.header.competitions[0].broadcasts[0].media.shortName}`
             break;
             
             case (data.header.competitions[0].broadcasts[0].media.shortName === "CBS"): 
@@ -472,7 +478,8 @@ venuePhoto.style.display = "none"
     
     // if (logo.header.competitions[0].competitors[0].possession === true) {      
      
-    
+        
+       
  
 // scoring plays //
 if (data.header.competitions[0].status.type.completed === false && data.header.competitions[0].status.type.description !== "Scheduled" && data.scoringPlays !== undefined) {
@@ -921,96 +928,96 @@ if (data.leaders !== []) {
         awayReceivingStats.style.backgroundColor = `#${awayTeamColor}`
         }
 
-        var field;
-        $(document).ready(function(){
-            field = new Field('canvas');
-            field.setStartingPoint();
-            field.markPlay();
-            field.markPlay();
-            console.log(field.yardsToGo(34));
-            field.markPlay();
-            field.firstDownLine();
-        });
-        function Field(elementId){	
-            this.currentPoint = 0;
-            this.currentPlayY = 10;
+        // var field;
+        // $(document).ready(function(){
+        //     field = new Field('canvas');
+        //     field.setStartingPoint();
+        //     field.markPlay();
+        //     field.markPlay();
+        //     console.log(field.yardsToGo(34));
+        //     field.markPlay();
+        //     field.firstDownLine();
+        // });
+        // function Field(elementId){	
+        //     this.currentPoint = 0;
+        //     this.currentPlayY = 10;
             
-            this.ctx = document.getElementById(elementId).getContext('2d');
+        //     this.ctx = document.getElementById(elementId).getContext('2d');
             
-            this.draw = function(){
-                    this.ctx.fillStyle = "rgb(0, 153, 41)"
-                    this.ctx.fillRect(0, 0, 720, 300);
-                    this.fillEndZones();
-                    this.createLines();
-            }
+        //     this.draw = function(){
+        //             this.ctx.fillStyle = "rgb(0, 153, 41)"
+        //             this.ctx.fillRect(0, 0, 720, 300);
+        //             this.fillEndZones();
+        //             this.createLines();
+        //     }
             
-            this.createLines = function(){
-                this.ctx.strokeStyle = "rgb(255, 255, 255)";
-                this.ctx.lineWidth = 2;
+        //     this.createLines = function(){
+        //         this.ctx.strokeStyle = "rgb(255, 255, 255)";
+        //         this.ctx.lineWidth = 2;
                 
-                //create yard lines
-                for(var i = 0; i < 11; i++){
-                    this.drawLine(60 + i*60);
-                }
-            }
+        //         //create yard lines
+        //         for(var i = 0; i < 11; i++){
+        //             this.drawLine(60 + i*60);
+        //         }
+        //     }
             
-             this.drawLine = function(x){
-                this.ctx.beginPath();
-                this.ctx.moveTo(x, 0);
-                this.ctx.lineTo(x, 300);
-                this.ctx.stroke();
-            }
+        //      this.drawLine = function(x){
+        //         this.ctx.beginPath();
+        //         this.ctx.moveTo(x, 0);
+        //         this.ctx.lineTo(x, 300);
+        //         this.ctx.stroke();
+        //     }
             
-            this.fillEndZones = function(){
-                this.ctx.fillStyle = `#${awayTeamColor}`; 
-                this.ctx.fillRect(0, 0, 60, 300);
-                this.ctx.fillStyle = `#${homeTeamColor}`;
-                this.ctx.fillRect(660, 0, 60, 300);
-            }
+        //     this.fillEndZones = function(){
+        //         this.ctx.fillStyle = `#${awayTeamColor}`; 
+        //         this.ctx.fillRect(0, 0, 60, 300);
+        //         this.ctx.fillStyle = `#${homeTeamColor}`;
+        //         this.ctx.fillRect(660, 0, 60, 300);
+        //     }
             
-            this.setStartingPoint = function(yards){
-                this.currentPoint = yards * 2 * 3 + 60;
-            }
+        //     this.setStartingPoint = function(yards){
+        //         this.currentPoint = yards * 2 * 3 + 60;
+        //     }
             
-            this.markPlay = function(yards){
-                endPoint = this.currentPoint + yards * 3 * 2;
-                if(endPoint > 660)
-                    endPoint = 660;
+        //     this.markPlay = function(yards){
+        //         endPoint = this.currentPoint + yards * 3 * 2;
+        //         if(endPoint > 660)
+        //             endPoint = 660;
                 
-                this.ctx.strokeStyle = "blue";
-                this.ctx.lineWidth = 10;
+        //         this.ctx.strokeStyle = "blue";
+        //         this.ctx.lineWidth = 10;
                 
-                this.ctx.beginPath();
-                this.ctx.moveTo(this.currentPoint, this.currentPlayY);
-                this.ctx.lineTo(endPoint - 4, this.currentPlayY);
-                this.ctx.stroke();
+        //         this.ctx.beginPath();
+        //         this.ctx.moveTo(this.currentPoint, this.currentPlayY);
+        //         this.ctx.lineTo(endPoint - 4, this.currentPlayY);
+        //         this.ctx.stroke();
                 
-                this.ctx.beginPath();
-                this.ctx.strokeStyle = "black";
-                this.ctx.moveTo(endPoint - 4, this.currentPlayY);
-                this.ctx.lineTo(endPoint, this.currentPlayY);
-                this.ctx.stroke();
+        //         this.ctx.beginPath();
+        //         this.ctx.strokeStyle = "black";
+        //         this.ctx.moveTo(endPoint - 4, this.currentPlayY);
+        //         this.ctx.lineTo(endPoint, this.currentPlayY);
+        //         this.ctx.stroke();
                 
-                this.currentPoint = endPoint;
-                this.currentPlayY = this.currentPlayY + 12;
-            }
+        //         this.currentPoint = endPoint;
+        //         this.currentPlayY = this.currentPlayY + 12;
+        //     }
             
-            this.yardsToGo = function(){
-                var result = (660 - this.currentPoint) / 2 / 3;
-                return result;
-            }
+        //     this.yardsToGo = function(){
+        //         var result = (660 - this.currentPoint) / 2 / 3;
+        //         return result;
+        //     }
             
-            this.firstDownLine = function(yardLine){
-                this.ctx.beginPath();
-                this.ctx.moveTo(yardLine * 2 * 3 + 60, 0);
-                this.ctx.lineTo(yardLine * 2 * 3 + 60, 300);
-                this.ctx.strokeStyle = "yellow";
-                this.ctx.lineWidth = 2;
-                this.ctx.stroke();
-            }
+        //     this.firstDownLine = function(yardLine){
+        //         this.ctx.beginPath();
+        //         this.ctx.moveTo(yardLine * 2 * 3 + 60, 0);
+        //         this.ctx.lineTo(yardLine * 2 * 3 + 60, 300);
+        //         this.ctx.strokeStyle = "yellow";
+        //         this.ctx.lineWidth = 2;
+        //         this.ctx.stroke();
+        //     }
             
-            this.draw();
-        }
+        //     this.draw();
+        // }
 
     }  
     displayData()
