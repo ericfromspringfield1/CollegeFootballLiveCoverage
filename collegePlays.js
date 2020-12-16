@@ -724,7 +724,7 @@ if (data.header.competitions[0].status.type.completed === true && data.header.co
          awayWinner = document.getElementById('winner') 
          awayWinner.innerHTML =`UPSET!!! <br> <img src="${awayDarkLogo}" width="250 height="250"><br>${awayScoreInt} - ${homeScoreInt}`
          venuePhoto.style.display = 'none'
-         venue.innerHTML =  `FINAL <hr><img src="${awayDarkLogo}" width='40' height='40'>${awayScoreInt} - ${homeScoreInt}<img src='${homeDarkLogo}' width='40' height='40'>`
+         venue.innerHTML =  `FINAL <hr><img src="${awayDarkLogo}" width='40' height='40' align='center'>${awayScoreInt} - ${homeScoreInt}<img src='${homeDarkLogo}' width='40' height='40'>`
          venue.style.background = `#${awayTeamColor}`
  
         var ofs2 = 0;
@@ -739,7 +739,7 @@ if (data.header.competitions[0].status.type.completed === true && data.header.co
          awayWinner = document.getElementById('winner') 
          awayWinner.innerHTML =`WINNER <br> <img src="${awayDarkLogo}" width="250 height="250"><br>${awayScoreInt} - ${homeScoreInt}`
          venuePhoto.style.display = 'none'
-         venue.innerHTML =  `FINAL <hr><img src="${awayDarkLogo}" width='40' height='40'>${awayScoreInt} - ${homeScoreInt}<img src='${homeDarkLogo}' width='40' height='40'>`
+         venue.innerHTML =  `FINAL <hr><img src="${awayDarkLogo}" width='40' height='40' align='center>${awayScoreInt} - ${homeScoreInt}<img src='${homeDarkLogo}' width='40' height='40'>`
          venue.style.background = `#${awayTeamColor}`
 
         var ofs2 = 0;
@@ -755,7 +755,7 @@ if (data.header.competitions[0].status.type.completed === true && data.header.co
         homeWinner = document.getElementById('winner') 
         homeWinner.innerHTML =`UPSET!!! <br> <img src="${homeDarkLogo}" width="250 height="250"><br>${homeScoreInt} - ${awayScoreInt}`
         venuePhoto.style.display = 'none'
-        venue.innerHTML =  `FINAL <hr><img src="${awayDarkLogo}" width='40' height='40'>${awayScoreInt} - ${homeScoreInt}<img src='${homeDarkLogo}' width='40' height='40'>`
+        venue.innerHTML =  `FINAL <hr><img src="${awayDarkLogo}" width='40' height='40' align='center>${awayScoreInt} - ${homeScoreInt}<img src='${homeDarkLogo}' width='40' height='40'>`
 
         var ofs2 = 0;
         var el2 = document.getElementById('winner');
