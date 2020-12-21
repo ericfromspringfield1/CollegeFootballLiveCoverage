@@ -1,55 +1,6 @@
-const gameIds = { 
-    ukAub: 401237034,
-    ufMiss: 401236952,
-    msuLsu: 401237035,
-    ugaArk: 401237033,
-    bamaMizz: 401236951,
-    vuAM: 401237037,
-    utSc: 401237036,
-   
-    amBama: 401237093,
-    mizzUT: 401237099,
-    aubUGA: 401237095,
-    lsuVU: 401237098,
-    arkMSU: 401237094,
-    missUK: 401237097,
-    scUF: 401237096,
-   
-    utUga: 401237103,
-    ufAm: 401237102,
-    mizzLSU: 401237105,
-    scVandy: 401237106,
-    arkAub: 401237101,
-    bamaMiss: 401237100,
-    msuUk: 401237104,
-    texOu: 401236005,
-    umClem: 401234604,
-   
-    aubSc: 401237109,
-    ukUt: 401237111,
-    missArk: 401237108,
-    AmMsu: 401237112,
-    UgaBama: 401237107,
-   
-    bamaUt: 401237114,
-    aubMiss: 401237115,
-    ukMizz: 401237122,
-    scLSU: 401237118,
-   
-    lsuAub: 401237121,
-    ugaUK: 401237117,
-    missVU: 401237123,
-    msuBama: 401237119,
-    arkAM: 401237120,
-    mizzUF: 401237116,
 
-    bamaLSU: 401237128,
-    bamaUf: 401237074,
-   
-    }
-   
 
-    const gameUrl = `https://site.api.espn.com/apis/site/v2/sports/football/college-football/summary?event=401251100`
+    const gameUrl = `https://site.api.espn.com/apis/site/v2/sports/football/college-football/summary?event=401240152`
     
     const displayData = async () => {
         const jsonData = await fetch (gameUrl)
@@ -113,6 +64,8 @@ const gameIds = {
     let venueCity = data.gameInfo.venue.address.city
     let venueState = data.gameInfo.venue.address.state
     let pointSpread = data.pickcenter[0].details
+    let homeTeamSite = data.header.competitions[0].competitors[0].team.links[0].href
+    let awayTeamSite = data.header.competitions[0].competitors[1].team.links[0].href
 
     
     //let articleLink = data.article.links.web.href
@@ -238,7 +191,7 @@ const gameIds = {
     }
   } 
 }
-
+        
 
     //If game has started and/or gone final, venue images do not appear during Live game info or final score "Winner" sequence 
     if (data.header.competitions[0].status.type.description !== "Scheduled"){
@@ -247,9 +200,9 @@ const gameIds = {
     // if no images or only one image is in the gameInfo images array, everything else can load and images will not be undefined //
     switch(data.gameInfo.venue !== undefined) {
         default: 
-        let venueImage = data.gameInfo.venue.images[1].href
-        let venueImage2 = data.gameInfo.venue.images[0].href
-        let venuePhoto = document.getElementById('venuePhoto')
+        venueImage = data.gameInfo.venue.images[1].href
+        venueImage2 = data.gameInfo.venue.images[0].href
+        venuePhoto = document.getElementById('venuePhoto')
         venuePhoto.innerHTML = `<img src="${venueImage}" width="675" height="250"> <img src="${venueImage2}" width="635" height="250">`
         venuePhoto.style.justifyContent = 'center';
         venuePhoto.style.alignItems = 'center'
@@ -260,25 +213,27 @@ const gameIds = {
         break;
 
         case (data.gameInfo.venue.images[1] === undefined):
+        venueImage2 = data.gameInfo.venue.images[0].href
+        venuePhoto = document.getElementById('venuePhoto')
         venuePhoto.innerHTML = `<img src="${venueImage2}" width="1415" height="400">` 
         venuePhoto.style.justifyContent = 'center';
         venuePhoto.style.alignItems = 'center'
         break;
 
         case (data.gameInfo.venue.images[0] === undefined):
+        venueImage = data.gameInfo.venue.images[1].href
+        venuePhoto = document.getElementById('venuePhoto')
         venuePhoto.innerHTML = `<img src="${venueImage}" width="1415" height="400">`
         venuePhoto.style.justifyContent = 'center';
         venuePhoto.style.alignItems = 'center'
         break;
 
-        
-    
     }  
 
     const championshipWeekend = data.header.gameNote
     const venue = document.getElementById('venue')
     if (championshipWeekend !== undefined){
-    venue.innerHTML = `<img src="${awayDarkLogo}" width="75" height="75" align="center"> ${championshipWeekend} | ${venueName} ${venueCity}, ${venueState} <img src="${homeDarkLogo}" width="75" height="75" align="center">`
+    venue.innerHTML = `<a href='${homeTeamSite}'><img src="${awayDarkLogo}" width="75" height="75" align="center"></a> ${championshipWeekend} | ${venueName} ${venueCity}, ${venueState} <a href='${homeTeamSite}'><img src="${homeDarkLogo}" width="75" height="75" align="center"></a>`
     venue.style.backgroundColor = `#${homeTeamColor}`
     }
 
@@ -337,23 +292,23 @@ const gameIds = {
     
     if (awayRank === undefined) {
     const awayTeam = document.getElementById('awayTeam')
-    awayTeam.innerHTML = `(${awayTeamRecord}) <img src="${awayDarkLogo}" width="75" height="75" align="center"> ${awayTeamName} ${awayScore}`
+    awayTeam.innerHTML = `(${awayTeamRecord}) <a href='${awayTeamSite}'><img src="${awayDarkLogo}" width="75" height="75" align="center"></a> ${awayTeamName} ${awayScore}`
     awayTeam.style.backgroundColor = `#${awayTeamColor}`
 
     } else {
     const awayTeam = document.getElementById('awayTeam')
-    awayTeam.innerHTML = `(${awayTeamRecord}) <img src=${awayDarkLogo} width="75" height="75" align="center"> ${awayRank} ${awayTeamName} ${awayScore}`
+    awayTeam.innerHTML = `(${awayTeamRecord}) <a href='${awayTeamSite}'><img src=${awayDarkLogo} width="75" height="75" align="center"></a> ${awayRank} ${awayTeamName} ${awayScore}`
     awayTeam.style.backgroundColor = `#${awayTeamColor}`
     }
 
     if (homeRank === undefined) {
     const homeTeam = document.getElementById('homeTeam')
-    homeTeam.innerHTML = `(${homeTeamRecord}) <img src=${homeDarkLogo} width="75" height="75" align="center"> ${homeTeamName} ${homeScore}`
+    homeTeam.innerHTML = `(${homeTeamRecord}) <a href='${homeTeamSite}'><img src=${homeDarkLogo} width="75" height="75" align="center"></a> ${homeTeamName} ${homeScore}`
     homeTeam.style.backgroundColor = `#${homeTeamColor}`
    
     } else {
     const homeTeam = document.getElementById('homeTeam')
-    homeTeam.innerHTML = `(${homeTeamRecord}) <img src=${homeDarkLogo} width="75" height="75" align="center"> ${homeRank} ${homeTeamName} ${homeScore}`
+    homeTeam.innerHTML = `(${homeTeamRecord}) <a href='${homeTeamSite}'><img src=${homeDarkLogo} width="75" height="75" align="center"></a> ${homeRank} ${homeTeamName} ${homeScore}`
     homeTeam.style.backgroundColor = `#${homeTeamColor}`
     }
 
@@ -878,6 +833,7 @@ if (data.leaders !== []) {
         awayRushingStats.innerHTML = `${awayRushingLeader} <br> ${awayRushingLeaderStats}`
         awayRushingStats.style.backgroundColor = `#${awayTeamColor}`
         }
+
     // Receiving stats container //
     if (data.leaders !== []) {
     let homeReceivingLeader = data.leaders[0].leaders[2].leaders[0].athlete.displayName
