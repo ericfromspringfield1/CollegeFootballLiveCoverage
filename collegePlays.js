@@ -1,6 +1,6 @@
+// WILL includes() method be more concise than If Statements and Switch Statements
 
-
-    const gameUrl = `https://site.api.espn.com/apis/site/v2/sports/football/college-football/summary?event=401240152`
+    const gameUrl = `https://site.api.espn.com/apis/site/v2/sports/football/college-football/summary?event=401240174`
     
     const displayData = async () => {
         const jsonData = await fetch (gameUrl)
@@ -190,7 +190,7 @@
     
     }
   } 
-}
+} 
         
 
     //If game has started and/or gone final, venue images do not appear during Live game info or final score "Winner" sequence 
@@ -229,7 +229,7 @@
         break;
 
     }  
-
+  
     const championshipWeekend = data.header.gameNote
     const venue = document.getElementById('venue')
     if (championshipWeekend !== undefined){
